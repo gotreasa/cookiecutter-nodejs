@@ -1,0 +1,54 @@
+{
+  "name": "template-repository",
+  "version": "1.0.0",
+  "description": "Template for basing repositories off",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint --cache --fix",
+    "postinstall": "npm run requirements-check",
+    "requirements-check": "node check_node_version.js",
+    "start": "node src/shortestWord.js",
+    "test:watch": "jest --watchAll --coverage",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gotreasa/templateRepository.git"
+  },
+  "author": "Gearoid O'Treasaigh",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/gotreasa/templateRepository/issues"
+  },
+  "homepage": "https://github.com/gotreasa/templateRepository#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "@types/eslint": "^7.2.5",
+    "@types/eslint-plugin-prettier": "^3.1.0",
+    "@types/jest": "^26.0.15",
+    "@types/prettier": "^2.1.5",
+    "eslint": "^7.13.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.1.3",
+    "eslint-plugin-prettier": "^3.1.4",
+    "husky": "^4.3.0",
+    "jest": "^26.6.3",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.1.2"
+  },
+  "engines": {
+    "node": "v14.15.1"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "npm-run-all lint test"
+    }
+  },
+  "dependencies": {
+    "semver": "^7.3.2"
+  }
+}
