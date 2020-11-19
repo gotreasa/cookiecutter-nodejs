@@ -57,11 +57,14 @@ echo "INFO: Initialising the repository"
 npm init
 
 # Setup git
-echo "INFO: Committing the code"
+echo "INFO: Initialise Git"
 rm -rf .git
 git init
 git remote add origin https://github.com/$gitUser/${repositoryName}
 git checkout -b main
 git add .
-git commit -m "feat: setup of the repository"
+echo "INFO: Setup Husky"
+npx husky init
+echo "INFO: Commit code to Git"
+git commit -m "feat: setup of the repository" --no-verify
 echo "INFO: Repository setup for ${repositoryName} is now complete"
