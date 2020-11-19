@@ -1,13 +1,13 @@
 {
-  "name": "template-repository",
+  "name": "templateRepository",
   "version": "1.0.0",
   "description": "Template for basing repositories off",
-  "main": "index.js",
+  "main": "src/templateRepository.js",
   "scripts": {
     "lint": "eslint --cache --fix",
     "postinstall": "npm run requirements-check",
     "requirements-check": "node check_node_version.js",
-    "start": "node src/shortestWord.js",
+    "start": "node src/templateRepository.js",
     "test:watch": "jest --watchAll --coverage",
     "test": "jest"
   },
@@ -40,7 +40,7 @@
     "prettier": "^2.1.2"
   },
   "engines": {
-    "node": "v14.15.1"
+    "node": "v14.15.0"
   },
   "husky": {
     "hooks": {
