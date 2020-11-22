@@ -1,8 +1,13 @@
 #!/bin/bash
+set +x
 # Check Git is installed
 if ! git --version; then
-    echo "ERROR: Git needs to be installed"
-    exit 1
+    if [[ $(uname) == "Darwin" ]]; then
+        brew install git
+    else
+        echo "ERROR: Git needs to be installed"
+        exit 1
+    fi
 else
     echo "INFO: All good with Git"
 fi
@@ -18,6 +23,7 @@ if ! nvm version; then
 else
     echo "INFO: All good with NVM"
 fi
+set -e
 
 while [ -z "$repositoryName" ]; do
     echo -e "\n\nWhat is the name of the repository you need?"
