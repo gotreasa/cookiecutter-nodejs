@@ -54,6 +54,7 @@ echo $nodeVersion > .nvmrc
 sed -i '' 's/"node": ".*"/"node": "'${nodeVersion}'"/g' package.json
 sed -i '' 's/gotreasa/'${gitUser}'/g' package.json
 sed -i '' 's/templateRepository/'${repositoryName}'/g' package.json
+sed -i '' "s/node-version: [14.15.1]/node-version: [${nodeVersion}/g" .github/workflows/node.js.yml
 # Install and update NPM packages
 echo "INFO: Setting up the npm packages"
 npm i
@@ -61,6 +62,10 @@ npx npm-check-updates -u
 npm i
 echo "INFO: Initialising the repository"
 npm init
+
+echo "INFO: Updating sonar properties file"
+sed -i '' 's/gotreasa/'${gitUser}'/g' sonar-project.properties
+sed -i '' 's/templateRepository/'${repositoryName}'/g' sonar-project.properties
 
 # Setup git
 echo "INFO: Initialise Git"
