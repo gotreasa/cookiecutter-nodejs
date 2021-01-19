@@ -12,6 +12,18 @@ else
     echo "INFO: All good with Git"
 fi
 
+# Check GH is installed
+if ! gh --version; then
+    if [[ $(uname) == "Darwin" ]]; then
+        brew install gh
+    else
+        echo "ERROR: GH needs to be installed"
+        exit 1
+    fi
+else
+    echo "INFO: All good with GH"
+fi
+
 # Setup the NVM path
 export NVM_DIR="$HOME/.nvm"
   [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
@@ -43,8 +55,12 @@ done
 
 # Clone the template repository to a new repository name
 echo "INFO: Creating the repository"
-git clone git@github.com:gotreasa/templateRepository.git $repositoryName
+gh repo create $repositoryName --public --confirm --template="gotreasa/templateRepository"
 cd $repositoryName
+while [[ "$(git branch -a | grep remotes/origin/main)" != *"remotes/origin/main" ]]; do
+    git fetch origin
+done
+git checkout main
 
 # Setup NVM and Node version
 echo "INFO: Installing node"
@@ -69,13 +85,10 @@ sed -i '' 's/templateRepository/'${repositoryName}'/g' sonar-project.properties
 
 # Setup git
 echo "INFO: Initialise Git"
-rm -rf .git
-git init
-git remote add origin https://github.com/$gitUser/${repositoryName}
-git checkout -b main
 git add .
 echo "INFO: Setup Husky"
 npx husky init
 echo "INFO: Commit code to Git"
-git commit -m "feat: setup of the repository" --no-verify
+git commit -m "feat: setup of the repository"
+git push origin main
 echo "INFO: Repository setup for ${repositoryName} is now complete"
