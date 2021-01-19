@@ -83,6 +83,18 @@ echo "INFO: Updating sonar properties file"
 sed -i '' 's/gotreasa/'${gitUser}'/g' sonar-project.properties
 sed -i '' 's/templateRepository/'${repositoryName}'/g' sonar-project.properties
 
+while [ -z "$sonarSecret" ]; do
+    echo -e "\n\nWhat is the sonar API key?"
+    read sonarSecret
+done
+gh secret set SONAR_TOKEN -b ${sonarSecret}
+
+while [ -z "$snykSecret" ]; do
+    echo -e "\n\nWhat is the synk API key?"
+    read snykSecret
+done
+gh secret set SNYK_TOKEN -b ${snykSecret}
+
 # Setup git
 echo "INFO: Initialise Git"
 git add .
