@@ -54,7 +54,7 @@ echo $nodeVersion > .nvmrc
 sed -i '' 's/"node": ".*"/"node": "'${nodeVersion}'"/g' package.json
 sed -i '' 's/gotreasa/'${gitUser}'/g' package.json
 sed -i '' 's/templateRepository/'${repositoryName}'/g' package.json
-sed -i '' "s/node-version: [14.15.1]/node-version: [${nodeVersion}/g" .github/workflows/node.js.yml
+sed -i '' 's/node-version: [14.15.1]/node-version: ['${nodeVersion}'/g' .github/workflows/node.js.yml
 # Install and update NPM packages
 echo "INFO: Setting up the npm packages"
 npm i
