@@ -76,8 +76,6 @@ echo "INFO: Setting up the npm packages"
 npm i
 npx npm-check-updates -u
 npm i
-echo "INFO: Initialising the repository"
-npm init
 
 echo "INFO: Updating sonar properties file"
 sed -i '' 's/gotreasa/'${gitUser}'/g' sonar-project.properties
@@ -85,13 +83,13 @@ sed -i '' 's/templateRepository/'${repositoryName}'/g' sonar-project.properties
 
 while [ -z "$sonarSecret" ]; do
     echo -e "\n\nWhat is the sonar API key?"
-    read sonarSecret
+    read -s sonarSecret
 done
 gh secret set SONAR_TOKEN -b ${sonarSecret}
 
 while [ -z "$snykSecret" ]; do
     echo -e "\n\nWhat is the synk API key?"
-    read snykSecret
+    read -s snykSecret
 done
 gh secret set SNYK_TOKEN -b ${snykSecret}
 
