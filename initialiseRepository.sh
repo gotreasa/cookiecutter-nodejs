@@ -24,6 +24,18 @@ else
     echo "INFO: All good with GH"
 fi
 
+# Check Curl is installed
+if ! curl --version; then
+    if [[ $(uname) == "Darwin" ]]; then
+        brew install curl
+    else
+        echo "ERROR: Curl needs to be installed"
+        exit 1
+    fi
+else
+    echo "INFO: All good with Curl"
+fi
+
 # Setup the NVM path
 export NVM_DIR="$HOME/.nvm"
   [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
@@ -87,6 +99,13 @@ while [ -z "$sonarSecret" ]; do
 done
 gh secret set SONAR_TOKEN -b ${sonarSecret}
 
+curl --include \
+     --request POST \
+     --header "Content-Type: application/x-www-form-urlencoded" \
+     -u ${sonarSecret}: \
+     -d "project=${gitUser}_${repositoryName}&organization=${gitUser}&name=${repositoryName}" \
+'https://sonarcloud.io/api/projects/create'
+
 while [ -z "$snykSecret" ]; do
     echo -e "\n\nWhat is the synk API key?"
     read -s snykSecret
@@ -94,11 +113,8 @@ done
 gh secret set SNYK_TOKEN -b ${snykSecret}
 
 # Setup git
-echo "INFO: Initialise Git"
-git add .
-echo "INFO: Setup Husky"
-npx husky init
 echo "INFO: Commit code to Git"
+git add .
 git commit -m "feat: setup of the repository"
 git push origin main
 echo "INFO: Repository setup for ${repositoryName} is now complete"
