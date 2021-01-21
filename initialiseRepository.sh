@@ -13,7 +13,13 @@ function installPackage() {
     set +e
     if ! $1 --version; then
         if [[ $(uname) == "Darwin" ]]; then
-            brew install $1
+            echo "INFO: Installing $1"
+            if ! brew install $1; then
+                echo "ERROR: There was an problem installing $1"
+                exit 1
+            else
+                echo "INFO: $1 installed successfully"
+            fi
         else
             echo "ERROR: $1 needs to be installed"
             exit 1
