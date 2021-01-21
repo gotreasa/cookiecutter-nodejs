@@ -1,4 +1,11 @@
 #!/bin/bash
+
+if [ -f .templateRepositoryConfig ]; then
+    . .templateRepositoryConfig
+    echo "INFO: Loaded existing configuration"
+else
+    echo "INFO: No configuration found, using interactive mode"
+fi
 set +x
 # Check Git is installed
 if ! git --version; then
@@ -54,14 +61,14 @@ while [ -z "$repositoryName" ]; do
     read repositoryName
 done
 
-while [ -z "$gitUser" ]; do
+while [ -z "$GIT_USER" ]; do
     echo "What is the name of your Git Hub ID?"
-    read gitUser
-    if [[ $(curl -L -s -o /dev/null -w "%{http_code}" http://github.com/$gitUser) != 200 ]]; then
-        echo "ERROR: hat ID was not found at http://github.com/$gitUser"
-        unset gitUser
+    read GIT_USER
+    if [[ $(curl -L -s -o /dev/null -w "%{http_code}" http://github.com/$GIT_USER) != 200 ]]; then
+        echo "ERROR: hat ID was not found at http://github.com/$GIT_USER"
+        unset GIT_USER
     else
-        echo "INFO: Your ID was found at http://github.com/$gitUser"
+        echo "INFO: Your ID was found at http://github.com/$GIT_USER"
     fi
 done
 
@@ -80,7 +87,7 @@ nvm install --lts
 nodeVersion=`nvm version` 
 echo $nodeVersion > .nvmrc
 sed -i '' 's/"node": ".*"/"node": "'${nodeVersion}'"/g' package.json
-sed -i '' 's/gotreasa/'${gitUser}'/g' package.json
+sed -i '' 's/gotreasa/'${GIT_USER}'/g' package.json
 sed -i '' 's/templateRepository/'${repositoryName}'/g' package.json
 sed -i '' 's/node-version: \[14.15.1\]/node-version: \['${nodeVersion}'\]/g' .github/workflows/node.js.yml
 # Install and update NPM packages
@@ -90,27 +97,34 @@ npx npm-check-updates -u
 npm i
 
 echo "INFO: Updating sonar properties file"
-sed -i '' 's/gotreasa/'${gitUser}'/g' sonar-project.properties
+sed -i '' 's/gotreasa/'${GIT_USER}'/g' sonar-project.properties
 sed -i '' 's/templateRepository/'${repositoryName}'/g' sonar-project.properties
 
-while [ -z "$sonarSecret" ]; do
+while [ -z "$SONAR_SECRET" ]; do
     echo -e "\n\nWhat is the sonar API key?"
-    read -s sonarSecret
+    read -s SONAR_SECRET
 done
-gh secret set SONAR_TOKEN -b ${sonarSecret}
+gh secret set SONAR_TOKEN -b ${SONAR_SECRET}
 
 curl --include \
      --request POST \
      --header "Content-Type: application/x-www-form-urlencoded" \
-     -u ${sonarSecret}: \
-     -d "project=${gitUser}_${repositoryName}&organization=${gitUser}&name=${repositoryName}" \
+     -u ${SONAR_SECRET}: \
+     -d "project=${GIT_USER}_${repositoryName}&organization=${GIT_USER}&name=${repositoryName}" \
 'https://sonarcloud.io/api/projects/create'
 
-while [ -z "$snykSecret" ]; do
+while [ -z "$SNYK_SECRET" ]; do
     echo -e "\n\nWhat is the synk API key?"
-    read -s snykSecret
+    read -s SNYK_SECRET
 done
-gh secret set SNYK_TOKEN -b ${snykSecret}
+gh secret set SNYK_TOKEN -b ${SNYK_SECRET}
+
+echo "INFO: Saving the configuration to file"
+cat > ../.templateRepositoryConfig << EOF
+GIT_USER=${GIT_USER}
+SONAR_SECRET=${SONAR_SECRET}
+SNYK_SECRET=${SNYK_SECRET}
+EOF
 
 # Setup git
 echo "INFO: Commit code to Git"
