@@ -4,7 +4,6 @@
   "description": "Template for basing repositories off",
   "main": "src/templateRepository.js",
   "scripts": {
-    "detect-secrets": "detect-secrets-launcher * --baseline .secrets-baseline",
     "lint": "eslint --cache --fix",
     "postinstall": "npm run requirements-check",
     "requirements-check": "node check_node_version.js",
@@ -48,7 +47,7 @@
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "npm-run-all detect-secrets lint test"
+      "pre-commit": "npm-run-all lint test"
     }
   },
   "dependencies": {
