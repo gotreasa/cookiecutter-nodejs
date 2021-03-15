@@ -11,6 +11,7 @@
 		"eamodio.gitlens",
 		"esbenp.prettier-vscode",
 		"ms-vsliveshare.vsliveshare",
+		"orta.vscode-jest",
 		"snyk-security.vscode-vuln-cost",
 		"wallabyjs.wallaby-vscode"
 	],
