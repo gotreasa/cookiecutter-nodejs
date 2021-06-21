@@ -4,9 +4,10 @@
   "description": "Template for basing repositories off",
   "main": "src/templateRepository.js",
   "scripts": {
+    "detect-secrets": "docker run --rm -v $(pwd):/code txo-toolbox-team-docker-local.artifactory.swg-devops.com/git-defenders/detect-secrets-hook:latest --baseline .secrets.baseline $(git diff --staged --name-only)",
     "lint": "eslint --cache --fix",
     "postinstall": "npm run requirements-check",
-    "precommit": "npm-run-all lint test",
+    "precommit": "npm-run-all lint test detect-secrets",
     "prepare": "husky install",
     "requirements-check": "node check_node_version.js",
     "start": "node src/templateRepository.js",
