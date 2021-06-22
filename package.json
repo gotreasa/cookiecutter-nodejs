@@ -1,8 +1,8 @@
 {
-  "name": "templateRepository",
+  "name": "template-nodejs",
   "version": "1.0.0",
   "description": "Template for basing repositories off",
-  "main": "src/templateRepository.js",
+  "main": "src/template-nodejs.js",
   "scripts": {
     "detect-secrets": "docker run --rm -v $(pwd):/code txo-toolbox-team-docker-local.artifactory.swg-devops.com/git-defenders/detect-secrets-hook:latest --baseline .secrets.baseline $(git diff --staged --name-only)",
     "lint": "eslint --cache --fix",
@@ -10,20 +10,20 @@
     "precommit": "npm-run-all lint test detect-secrets",
     "prepare": "husky install",
     "requirements-check": "node check_node_version.js",
-    "start": "node src/templateRepository.js",
+    "start": "node src/template-nodejs.js",
     "test:watch": "jest --watchAll --coverage",
     "test": "jest"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gotreasa/templateRepository.git"
+    "url": "git+https://github.ibm.com/gotreasa/template-nodejs.git"
   },
   "author": "Gearoid O'Treasaigh",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/gotreasa/templateRepository/issues"
+    "url": "https://github.ibm.com/gotreasa/template-nodejs/issues"
   },
-  "homepage": "https://github.com/gotreasa/templateRepository#readme",
+  "homepage": "https://github.ibm.com/gotreasa/template-nodejs#readme",
   "devDependencies": {
     "@commitlint/cli": "^12.1.1",
     "@commitlint/config-conventional": "^12.1.1",
