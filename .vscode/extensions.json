@@ -5,6 +5,7 @@
 	// List of extensions which should be recommended for users of this workspace.
 	"recommendations": [
 		"andys8.jest-snippets",
+		"arjun.swagger-viewer",
 		"arturock.gitstash",
 		"dbaeumer.vscode-eslint",
 		"donjayamanne.githistory",
@@ -12,6 +13,8 @@
 		"esbenp.prettier-vscode",
 		"ms-vsliveshare.vsliveshare",
 		"orta.vscode-jest",
+		"rvest.vs-code-prettier-eslint",
+		"snyk-security.snyk-vulnerability-scanner",
 		"snyk-security.vscode-vuln-cost",
 		"wallabyjs.wallaby-vscode"
 	],
