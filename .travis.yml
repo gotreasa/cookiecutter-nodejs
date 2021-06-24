@@ -1,0 +1,39 @@
+language: node_js
+addons:
+  sonarcloud:
+    organization: "gotreasa" # the key of the org you chose at step #3
+    token:
+      secure: "RVEfFcLiCWNTnxarYhuJgSVaOWT4vdhjcOMp7VAQA2TVbiYaLcbyY/E5/YRjziWa9g9MkuFVbGbqSRQzzTDMaOsVQ9gjV0+goPbEvSLzPgUtOdBRRCCLMYt7TKcYSdbaFavL8yPjCgBPuBzF/srH+8yluinKON7/frC/dbnjtgzHmFboP7bVwSgiCAUZa6PlJ5QiWaMQsepyDvDMyW/zKY4Y7Gwv8TbBgy9/LdmWKdQP+TjNoWQEGT2tUCfOKICWJ1xGz/J39qEpItL9MrRxWA+NkAxjqskJK/ysigTmixfskc0jwEVTH9LP1Q4aDtHLlwPA9kyD8JHgcDIPhESbHyvxhgamaWH8Q6NJzL/uF9qU4Id07UoWQ+u8mCPPJy2qBbr/+xN0yTq6qy6Hp5KXdvCF2uuegQqqo++T7SxesZlDfPwv/mDagSUpXrict2TtpAurEscJHg7Luh4FeC5pq6+sQRdoMVOHN18j+HLsYn0YkDCWoTxN21hJSaGkQh+LqeyHEAbjzWwZwRjMqpOw+cyRIpLZ0LNUMRTzh/sVfY5ZXyy/qbiEKA/f+O/jUjFJOfAPo4QgyI1raW8N+s/TgiXimxs5lWikzmUjvjkAWmMawlRK8i3Y72vm/cz54IU5SL+WMugmfWKsXH4pdPvM1srIa8AgUPtJrFqtCyF8P5o="
+stages:
+- name: Build
+- name: Test
+- name: Monitor
+jobs:
+  include:
+  - stage: Build
+    name: Snyk vulnerability check
+    script:
+      snyk test
+  - name: SonarCloud check
+    script:
+    - sonar-scanner
+  - language: python
+    python: 3.9
+    name: Detect secrets in files
+    script:
+      - pip install --upgrade "git+https://github.com/ibm/detect-secrets.git@master#egg=detect-secrets"
+      - detect-secrets-hook --baseline .secrets.baseline $(git ls-files)
+  - language: node_js
+    name: Detect secrets in files
+    script:
+      commitlint-travis
+  - stage: Test
+    script:
+      - npm test
+  - stage: Monitor
+    script:
+      snyk monitor
+env:
+  global:
+    # SYNK TOKEN
+    secure: M5Ck1wWSp+DJ2Ev0bFBORz8jyOkkpJP37JBjAlz14uxI0MgNuxklffjFFfcBNFAeg0TDq3FAthUhYkEjfA54jFdHABULBTvA0dpwSK7zmLfmd0YfxuDr4MFc3y1sWM+GSsmBBMNV251msQOLgQG4trfZiD/5h3I6ZoJnv+Qav2qYAy5zw9NmBp8d7ccQjhD+9L8Kj90DYMlRymvfZ3FH4zDkql7XCZ4AT6IjRasnzyXa0LsTRAVdP8MLwniAZwkkieWCbTkDgClieW6Wufc9odwWv/14MBJ1xhBkdbaowm1sTECbgkoFzLgpRnR9TnR1vpF8cCT0J0tR/SfLNfg8uKOs0n5E12FVJcOrVmoTGrGucC+s/CGz/5GLbiqBvmh3bosGRcQo3EG616+yrNHDPTPcw4Gq3j76uc4l4WSqscas2o6w21saGzj8hFBeSMB9TMzvoOFoMFNo3qrTY2s6/GWnkNSPFT1Hg2zVAs9pTShhhUiJv3+s784wQH1Qi2/x+Vy0p6VuvHSU3HHtQucejCoBKMqE99FXa+9wEjTp+m7EASV18oL8QGhDYflBXLs5fBb2q9ELGK5QjnwUzXIdlK0udFsWJjtFaHIAmGduNC0NFx12GYAPTnMGCfj56sSf28ggcjhIDR78E4JOjIjUPUcfhVLDeelWruRU4Oi7/3M=
