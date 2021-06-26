@@ -9,7 +9,7 @@
     "detect-secrets:exclude": "docker run --rm -v $(pwd):/code txo-toolbox-team-docker-local.artifactory.swg-devops.com/git-defenders/detect-secrets:latest scan --update .secrets.baseline --exclude-files",
     "detect-secrets:update-baseline": "docker run --rm -v $(pwd):/code txo-toolbox-team-docker-local.artifactory.swg-devops.com/git-defenders/detect-secrets:latest scan --update .secrets.baseline",
     "detect-vulnerabilities": "snyk test",
-    "lint": "eslint --cache --fix",
+    "lint": "lint-staged",
     "postinstall": "npm run requirements-check",
     "precommit": "npm-run-all lint detect-secrets",
     "prepare": "husky install",
@@ -46,6 +46,7 @@
     "eslint-plugin-prettier": "^3.4.0",
     "husky": "^6.0.0",
     "jest": "^27.0.5",
+    "lint-staged": "^11.0.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.3.2",
     "snyk": "^1.646.0"
@@ -55,5 +56,11 @@
   },
   "dependencies": {
     "semver": "^7.3.5"
+  },
+  "lint-staged": {
+    "**/*.js": [
+      "eslint --fix",
+      "git add"
+    ]
   }
 }
