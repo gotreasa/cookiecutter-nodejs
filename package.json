@@ -5,11 +5,12 @@
   "main": "src/template-nodejs.js",
   "scripts": {
     "detect-secrets": "docker run --rm -v $(pwd):/code txo-toolbox-team-docker-local.artifactory.swg-devops.com/git-defenders/detect-secrets-hook:latest --baseline .secrets.baseline $(git diff --staged --name-only)",
+    "detect-vulnerabilities": "snyk test",
     "lint": "eslint --cache --fix",
     "postinstall": "npm run requirements-check",
     "precommit": "npm-run-all lint detect-secrets",
     "prepare": "husky install",
-    "pre-push": "npm test",
+    "pre-push": "npm-run-all test detect-vulnerabilities",
     "requirements-check": "node check_node_version.js",
     "start": "node src/template-nodejs.js",
     "test:watch": "jest --watchAll --coverage",
