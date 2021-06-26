@@ -18,14 +18,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.ibm.com/gotreasa/template-nodejs.git"
+    "url": "git+https://github.ibm.com/GOTREASA/template-nodejs.git"
   },
   "author": "Gearoid O'Treasaigh",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.ibm.com/gotreasa/template-nodejs/issues"
+    "url": "https://github.ibm.com/GOTREASA/template-nodejs/issues"
   },
-  "homepage": "https://github.ibm.com/gotreasa/template-nodejs#readme",
+  "homepage": "https://github.ibm.com/GOTREASA/template-nodejs#readme",
   "devDependencies": {
     "@commitlint/cli": "^12.1.1",
     "@commitlint/config-conventional": "^12.1.1",
