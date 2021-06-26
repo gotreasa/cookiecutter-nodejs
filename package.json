@@ -9,6 +9,7 @@
     "detect-secrets:exclude": "docker run --rm -v $(pwd):/code txo-toolbox-team-docker-local.artifactory.swg-devops.com/git-defenders/detect-secrets:latest scan --update .secrets.baseline --exclude-files",
     "detect-secrets:update-baseline": "docker run --rm -v $(pwd):/code txo-toolbox-team-docker-local.artifactory.swg-devops.com/git-defenders/detect-secrets:latest scan --update .secrets.baseline",
     "detect-vulnerabilities": "snyk test",
+    "lint": "eslint --cache --fix",
     "lint-staged": "lint-staged",
     "postinstall": "npm run requirements-check",
     "precommit": "npm-run-all lint-staged detect-secrets",
