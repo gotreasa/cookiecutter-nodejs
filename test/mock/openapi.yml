@@ -1,0 +1,22 @@
+openapi: "3.0.3"
+info:
+  title: Template NodeJS & Express API
+  description: Template NodeJS & Express API for testing.
+  version: 1.0.0
+servers: 
+  - url: https://localhost:8080/{basePath}
+    variables:
+      basePath: 
+        default: api/v1
+paths:
+  /dummy:
+    get:
+      summary: Returns a list of users.
+      description: List of users on the system.
+      responses:
+        200:
+          description: OK
+          content: 
+            application/json:
+              schema:
+                type: object
