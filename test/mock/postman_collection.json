@@ -1,10 +1,10 @@
 {
   "_": {
-    "postman_id": "6e7f103e-cec1-4a32-b6ba-e3e62def2ada"
+    "postman_id": "fd3a4e95-d35d-4347-b4df-b2fceee12392"
   },
   "item": [
     {
-      "id": "26421a0e-d067-48d3-a02c-975fecbb1fef",
+      "id": "09da545d-f86d-480d-aea0-f09a60b06427",
       "name": "Returns a list of users.",
       "request": {
         "name": "Returns a list of users.",
@@ -39,7 +39,7 @@
           "_": {
             "postman_previewlanguage": "json"
           },
-          "id": "889bf154-2b8f-4929-af96-461c2bc6bf7b",
+          "id": "7be7ea50-6f05-44ec-8214-54e75d88feaa",
           "name": "OK",
           "originalRequest": {
             "url": {
@@ -71,7 +71,7 @@
         {
           "listen": "test",
           "script": {
-            "id": "04732ae0-1da6-4f82-95f6-eeff9e9a484b",
+            "id": "786a08fe-f8d5-418b-b68c-1a7bc92299d4",
             "type": "text/javascript",
             "exec": [
               "// Validate response status code \npm.test(\"[GET]::/dummy - Response status code is 200\", function () {\n    pm.expect(pm.response.code).to.equal(200);\n});\n"
@@ -94,12 +94,12 @@
     },
     {
       "type": "string",
-      "value": "https://localhost:8080/{{basePath}}",
+      "value": "https://localhost:8090/{{basePath}}",
       "key": "baseUrl"
     }
   ],
   "info": {
-    "_postman_id": "6e7f103e-cec1-4a32-b6ba-e3e62def2ada",
+    "_postman_id": "fd3a4e95-d35d-4347-b4df-b2fceee12392",
     "name": "Template NodeJS & Express API",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "description": {
