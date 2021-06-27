@@ -24,9 +24,9 @@ jobs:
       - pip install --upgrade "git+https://github.com/ibm/detect-secrets.git@master#egg=detect-secrets"
       - detect-secrets-hook --baseline .secrets.baseline $(git ls-files)
   - language: node_js
-    name: Detect secrets in files
+    name: Run commit lint
     script:
-      commitlint-travis
+      - commitlint-travis
   - stage: Test
     script:
       - npm test
