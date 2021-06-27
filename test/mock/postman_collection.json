@@ -94,7 +94,7 @@
     },
     {
       "type": "string",
-      "value": "http://localhost:8090/{{basePath}}",
+      "value": "http://localhost:9080/{{basePath}}",
       "key": "baseUrl"
     }
   ],
