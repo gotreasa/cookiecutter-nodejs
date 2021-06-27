@@ -1,10 +1,10 @@
 {
   "_": {
-    "postman_id": "2d9c7b44-7e65-41be-9223-6431ecb0bfe6"
+    "postman_id": "cc601ee2-0066-438c-955d-a80eadac3dc0"
   },
   "item": [
     {
-      "id": "7aa966ef-2848-468a-9daa-8fcbde847e22",
+      "id": "453f607f-ab53-4837-9bfb-461d35d25d20",
       "name": "Returns a list of users.",
       "request": {
         "name": "Returns a list of users.",
@@ -29,7 +29,7 @@
           "_": {
             "postman_previewlanguage": "json"
           },
-          "id": "017dba5f-6f19-46c2-be8b-5eefdbf8b648",
+          "id": "761dbb33-a4d0-4e0a-80d3-80f58e35931b",
           "name": "OK",
           "originalRequest": {
             "url": {
@@ -61,7 +61,7 @@
         {
           "listen": "test",
           "script": {
-            "id": "4a8f180f-a301-4267-8124-ca6bf1c2d07a",
+            "id": "f3b54144-2de3-4b46-b3d1-e3d1a6061cdc",
             "type": "text/javascript",
             "exec": [
               "// Validate response status code \npm.test(\"[GET]::/dummy - Response status code is 200\", function () {\n    pm.expect(pm.response.code).to.equal(200);\n});\n"
@@ -80,7 +80,7 @@
     }
   ],
   "info": {
-    "_postman_id": "2d9c7b44-7e65-41be-9223-6431ecb0bfe6",
+    "_postman_id": "cc601ee2-0066-438c-955d-a80eadac3dc0",
     "name": "Template NodeJS & Express API",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "description": {
