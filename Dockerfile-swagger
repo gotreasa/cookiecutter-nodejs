@@ -1,0 +1,9 @@
+FROM swaggerapi/swagger-ui:latest as BUILD
+
+WORKDIR /
+
+COPY test/mock/openapi.yml /
+
+ENV SWAGGER_JSON /openapi.yml
+
+CMD [ "sh", "/usr/share/nginx/run.sh" ]
