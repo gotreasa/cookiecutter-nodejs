@@ -4,6 +4,7 @@
   "description": "Template for basing repositories off",
   "main": "src/template-nodejs.js",
   "scripts": {
+    "build:postman": "portman --local test/mock/openapi.yml --output test/mock/postman_collection.json --portmanConfigFile portman/portman-config.json",
     "detect-secrets": "docker run --rm -v $(pwd):/code txo-toolbox-team-docker-local.artifactory.swg-devops.com/git-defenders/detect-secrets-hook:latest --baseline .secrets.baseline $(git diff --staged --name-only)",
     "detect-secrets:audit": "docker run --rm -v $(pwd):/code txo-toolbox-team-docker-local.artifactory.swg-devops.com/git-defenders/detect-secrets:latest audit .secrets.baseline",
     "detect-secrets:exclude": "docker run --rm -v $(pwd):/code txo-toolbox-team-docker-local.artifactory.swg-devops.com/git-defenders/detect-secrets:latest scan --update .secrets.baseline --exclude-files",
@@ -16,6 +17,7 @@
     "pre-push": "npm-run-all test detect-vulnerabilities",
     "requirements-check": "node check_node_version.js",
     "start": "node src/template-nodejs.js",
+    "start:swagger": "docker run --rm -p 80:8080 -e SWAGGER_JSON=/definition/openapi.yml -v $(pwd)/test/mock:/definition swaggerapi/swagger-ui:latest",
     "test": "npm run test:unit",
     "test:security": "snyk test",
     "test:security:dev": "snyk test --dev",
