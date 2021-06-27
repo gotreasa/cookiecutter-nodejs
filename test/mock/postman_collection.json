@@ -1,0 +1,110 @@
+{
+  "_": {
+    "postman_id": "6e7f103e-cec1-4a32-b6ba-e3e62def2ada"
+  },
+  "item": [
+    {
+      "id": "26421a0e-d067-48d3-a02c-975fecbb1fef",
+      "name": "Returns a list of users.",
+      "request": {
+        "name": "Returns a list of users.",
+        "description": {
+          "content": "List of users on the system.",
+          "type": "text/plain"
+        },
+        "url": {
+          "path": [
+            "dummy"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "description": {
+                "content": "",
+                "type": "text/plain"
+              },
+              "type": "any",
+              "value": "{{basePath}}",
+              "key": "basePath"
+            }
+          ]
+        },
+        "method": "GET"
+      },
+      "response": [
+        {
+          "_": {
+            "postman_previewlanguage": "json"
+          },
+          "id": "889bf154-2b8f-4929-af96-461c2bc6bf7b",
+          "name": "OK",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "dummy"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{}",
+          "cookie": []
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "04732ae0-1da6-4f82-95f6-eeff9e9a484b",
+            "type": "text/javascript",
+            "exec": [
+              "// Validate response status code \npm.test(\"[GET]::/dummy - Response status code is 200\", function () {\n    pm.expect(pm.response.code).to.equal(200);\n});\n"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "api/v1",
+      "key": "basePath"
+    },
+    {
+      "type": "string",
+      "value": "https://localhost:8080/{{basePath}}",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "6e7f103e-cec1-4a32-b6ba-e3e62def2ada",
+    "name": "Template NodeJS & Express API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Template NodeJS & Express API for testing.",
+      "type": "text/plain"
+    }
+  }
+}
