@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  templatenodejs:
+    image: templatenodejs
+    container_name: template-nodejs
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: production
+    ports:
+      - 9080:9080
+
+  swagger:
+    image: swaggerapi/swagger-ui
+    container_name: swagger-ui
+    environment:
+      SWAGGER_JSON: /definition/openapi.yml
+    volumes:
+      - ./test/mock/openapi.yml:/definition/openapi.yml
+    ports:
+      - 3080:8080
