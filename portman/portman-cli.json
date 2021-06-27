@@ -1,0 +1,9 @@
+{
+  "local": "test/mock/openapi.yml",
+  "output": "test/mock/mock.postman_collection.json",
+  "envFile": "portman/.env-portman",
+  "portmanConfigFile": "portman/portman-config.json",
+  "includeTests": true,
+  "syncPostman": false,
+  "runNewman": false
+}
