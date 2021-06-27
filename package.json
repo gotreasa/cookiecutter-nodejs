@@ -19,7 +19,7 @@
     "start": "node src/template-nodejs.js",
     "start:app": "node src/app.js",
     "start:app:dev": "nodemon src/app.js",
-    "start:swagger": "docker run --rm -p 80:8080 -e SWAGGER_JSON=/definition/openapi.yml -v $(pwd)/test/mock:/definition swaggerapi/swagger-ui:latest",
+    "start:swagger": "docker run --rm -p 3080:8080 -e SWAGGER_JSON=/definition/openapi.yml -v $(pwd)/test/mock/openapi.yaml:/definition/openapi.yaml swaggerapi/swagger-ui:latest",
     "test": "npm run test:unit",
     "test:api": "newman run test/mock/postman_collection.json",
     "test:api:watch": "chokidar 'src/*.js' -c 'npm run test:api'",
