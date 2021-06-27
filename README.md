@@ -2,3 +2,6 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/gotreasa/template-nodejs/badge.svg)](https://snyk.io/test/github/gotreasa/template-nodejs)
 
 # template-nodejs
+
+API: https://template-nodejs-app.wdc1a.ciocloud.nonprod.intranet.ibm.com/api/v1/dummy  
+Swagger: https://template-nodejs-swagger-ui.wdc1a.ciocloud.nonprod.intranet.ibm.com/  
