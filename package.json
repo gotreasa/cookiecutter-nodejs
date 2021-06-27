@@ -14,7 +14,7 @@
     "postinstall": "npm run requirements-check && npm run test:security",
     "precommit": "npm-run-all lint-staged detect-secrets",
     "prepare": "husky install",
-    "pre-push": "npm-run-all test detect-vulnerabilities",
+    "pre-push": "npm-run-all test test:security",
     "requirements-check": "node check_node_version.js",
     "start": "node src/template-nodejs.js",
     "start:swagger": "docker run --rm -p 80:8080 -e SWAGGER_JSON=/definition/openapi.yml -v $(pwd)/test/mock:/definition swaggerapi/swagger-ui:latest",
