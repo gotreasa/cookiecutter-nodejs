@@ -178,3 +178,6 @@ dist
 
 # Snyk file
 **/.dccache
+
+# Temporary files used for Portman
+tmp/
