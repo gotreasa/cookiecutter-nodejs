@@ -1,10 +1,10 @@
 {
   "_": {
-    "postman_id": "ab984968-6f10-4b88-a61b-70adbc4a3f54"
+    "postman_id": "2d9c7b44-7e65-41be-9223-6431ecb0bfe6"
   },
   "item": [
     {
-      "id": "ca7b0f38-d69d-41f5-924d-9ad46f68ea22",
+      "id": "7aa966ef-2848-468a-9daa-8fcbde847e22",
       "name": "Returns a list of users.",
       "request": {
         "name": "Returns a list of users.",
@@ -20,17 +20,7 @@
             "{{baseUrl}}"
           ],
           "query": [],
-          "variable": [
-            {
-              "description": {
-                "content": "",
-                "type": "text/plain"
-              },
-              "type": "any",
-              "value": "{{basePath}}",
-              "key": "basePath"
-            }
-          ]
+          "variable": []
         },
         "method": "GET"
       },
@@ -39,7 +29,7 @@
           "_": {
             "postman_previewlanguage": "json"
           },
-          "id": "e7f9e49d-4ecb-46f8-9c21-4f3ab7bbfd2e",
+          "id": "017dba5f-6f19-46c2-be8b-5eefdbf8b648",
           "name": "OK",
           "originalRequest": {
             "url": {
@@ -71,7 +61,7 @@
         {
           "listen": "test",
           "script": {
-            "id": "c5caaea1-5cc6-47bd-aa33-a32316e12c94",
+            "id": "4a8f180f-a301-4267-8124-ca6bf1c2d07a",
             "type": "text/javascript",
             "exec": [
               "// Validate response status code \npm.test(\"[GET]::/dummy - Response status code is 200\", function () {\n    pm.expect(pm.response.code).to.equal(200);\n});\n"
@@ -84,22 +74,13 @@
   "event": [],
   "variable": [
     {
-      "description": {
-        "content": "",
-        "type": "text/plain"
-      },
-      "type": "any",
-      "value": "api/v1",
-      "key": "basePath"
-    },
-    {
       "type": "string",
-      "value": "http://localhost:9080/{{basePath}}",
+      "value": "http://localhost:9080/api/v1",
       "key": "baseUrl"
     }
   ],
   "info": {
-    "_postman_id": "ab984968-6f10-4b88-a61b-70adbc4a3f54",
+    "_postman_id": "2d9c7b44-7e65-41be-9223-6431ecb0bfe6",
     "name": "Template NodeJS & Express API",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "description": {

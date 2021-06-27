@@ -4,10 +4,8 @@ info:
   description: Template NodeJS & Express API for testing.
   version: 1.0.0
 servers: 
-  - url: http://localhost:9080/{basePath}
-    variables:
-      basePath: 
-        default: api/v1
+  - url: http://localhost:9080/api/v1
+  - url: https://template-app.wdc1a.ciocloud.nonprod.intranet.ibm.com/api/v1
 paths:
   /dummy:
     get:
