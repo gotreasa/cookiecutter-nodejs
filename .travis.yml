@@ -14,9 +14,6 @@ jobs:
     name: Snyk vulnerability check
     script:
       snyk test
-  - name: SonarCloud check
-    script:
-    - sonar-scanner
   - language: python
     python: 3.9
     name: Detect secrets in files
@@ -30,6 +27,7 @@ jobs:
   - stage: Test
     script:
       - npm test
+      - sonar-scanner
   - stage: Monitor
     script:
       snyk monitor
