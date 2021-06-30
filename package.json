@@ -25,8 +25,8 @@
     "test:api:watch": "chokidar 'src/*.js' -c 'npm run test:api'",
     "test:security": "snyk test",
     "test:security:dev": "snyk test --dev",
-    "test:unit": "jest",
-    "test:unit:watch": "jest --watchAll --coverage",
+    "test:unit": "jest --verbose",
+    "test:unit:watch": "jest --watchAll --coverage --verbose",
     "typesync": "typesync ./package.json"
   },
   "repository": {
@@ -54,7 +54,6 @@
     "@types/prettier": "^2.3.0",
     "@types/semver": "^7.3.6",
     "chokidar-cli": "^2.1.0",
-    "detect-secrets": "^1.0.6",
     "eslint": "^7.29.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^8.3.0",
