@@ -1,4 +1,4 @@
-const Dummy = require('../src/dummy.js');
+const Dummy = require('../src/Dummy');
 
 describe('Name of the group', () => {
   test('should ...', () => {
