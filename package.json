@@ -2,6 +2,16 @@
   "name": "template-nodejs",
   "version": "1.0.0",
   "description": "Template for basing repositories off",
+  "homepage": "https://github.ibm.com/GOTREASA/template-nodejs#readme",
+  "bugs": {
+    "url": "https://github.ibm.com/GOTREASA/template-nodejs/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.ibm.com/GOTREASA/template-nodejs.git"
+  },
+  "license": "Apache-2.0",
+  "author": "Gearoid O'Treasaigh",
   "main": "src/template-nodejs.js",
   "scripts": {
     "build:postman": "portman --cliOptionsFile portman/portman-cli.json",
@@ -29,16 +39,23 @@
     "test:unit:watch": "jest --watchAll --coverage --verbose",
     "typesync": "typesync ./package.json"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.ibm.com/GOTREASA/template-nodejs.git"
+  "lint-staged": {
+    "**/*.js": [
+      "eslint --fix",
+      "git add"
+    ],
+    "package.json": [
+      "npm run typesync --silent",
+      "sort-package-json",
+      "git add"
+    ]
   },
-  "author": "Gearoid O'Treasaigh",
-  "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.ibm.com/GOTREASA/template-nodejs/issues"
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "helmet": "^4.6.0",
+    "semver": "^7.3.5"
   },
-  "homepage": "https://github.ibm.com/GOTREASA/template-nodejs#readme",
   "devDependencies": {
     "@apideck/portman": "^1.1.2",
     "@commitlint/cli": "^12.1.4",
@@ -68,25 +85,10 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^2.3.2",
     "snyk": "^1.652.0",
+    "sort-package-json": "^1.50.0",
     "typesync": "^0.8.0"
   },
   "engines": {
     "node": "v14.17.1"
-  },
-  "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "helmet": "^4.6.0",
-    "semver": "^7.3.5"
-  },
-  "lint-staged": {
-    "**/*.js": [
-      "eslint --fix",
-      "git add"
-    ],
-    "package.json": [
-      "npm run typesync --silent",
-      "git add"
-    ]
   }
 }
