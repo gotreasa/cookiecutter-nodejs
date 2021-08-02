@@ -15,14 +15,13 @@
   "main": "src/template-nodejs.js",
   "scripts": {
     "build:postman": "portman --cliOptionsFile portman/portman-cli.json",
-    "detect-secrets": "docker run --rm -v $(pwd):/code txo-toolbox-team-docker-local.artifactory.swg-devops.com/git-defenders/detect-secrets-hook:latest --baseline .secrets.baseline $(git diff --staged --name-only)",
-    "detect-secrets:audit": "docker run -it --rm -v $(pwd):/code txo-toolbox-team-docker-local.artifactory.swg-devops.com/git-defenders/detect-secrets:latest audit .secrets.baseline",
-    "detect-secrets:exclude": "docker run --rm -v $(pwd):/code txo-toolbox-team-docker-local.artifactory.swg-devops.com/git-defenders/detect-secrets:latest scan --update .secrets.baseline --exclude-files",
-    "detect-secrets:update-baseline": "docker run --rm -v $(pwd):/code txo-toolbox-team-docker-local.artifactory.swg-devops.com/git-defenders/detect-secrets:latest scan --update .secrets.baseline",
+    "detect-secrets": "cross-env-shell docker run --rm -v ${INIT_CWD}:/code ibmcom/detect-secrets-hook:latest --baseline .secrets.baseline",
+    "detect-secrets:audit": "cross-env-shell docker run -it --rm -v ${INIT_CWD}:/code ibmcom/detect-secrets:latest audit .secrets.baseline",
+    "detect-secrets:exclude": "cross-env-shell docker run --rm -v ${INIT_CWD}:/code ibmcom/detect-secrets:latest scan --update .secrets.baseline --exclude-files",
+    "detect-secrets:update-baseline": "cross-env-shell docker run --rm -v ${INIT_CWD}:/code ibmcom/detect-secrets:latest scan --update .secrets.baseline",
     "lint": "eslint --cache --fix",
-    "lint-staged": "lint-staged",
     "postinstall": "npm run requirements-check",
-    "precommit": "npm-run-all lint-staged detect-secrets",
+    "precommit": "lint-staged",
     "prepare": "husky install",
     "pre-push": "npm-run-all test test:security",
     "requirements-check": "node check_node_version.js",
@@ -40,6 +39,9 @@
     "typesync": "typesync ./package.json"
   },
   "lint-staged": {
+    "*": [
+      "npm run detect-secrets"
+    ],
     "**/*.js": [
       "eslint --fix",
       "git add"
@@ -71,6 +73,7 @@
     "@types/prettier": "^2.3.1",
     "@types/semver": "^7.3.6",
     "chokidar-cli": "^2.1.0",
+    "cross-env": "^7.0.3",
     "eslint": "^7.29.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^8.3.0",
@@ -84,7 +87,7 @@
     "nodemon": "^2.0.9",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.3.2",
-    "snyk": "^1.652.0",
+    "snyk": "^1.673.0",
     "sort-package-json": "^1.50.0",
     "typesync": "^0.8.0"
   },
