@@ -1,4 +1,6 @@
 language: node_js
+services:
+  - docker
 addons:
   sonarcloud:
     organization: "gotreasa" # the key of the org you chose at step #3
@@ -15,15 +17,11 @@ jobs:
     name: Snyk vulnerability check
     script:
       snyk test
-  - language: python
-    python: 3.9
-    env: step=Detect secrets in files
+  - env: step=Detect secrets in files
     name: Detect secrets in files
     script:
-      - pip install --upgrade "git+https://github.com/ibm/detect-secrets.git@master#egg=detect-secrets"
-      - detect-secrets-hook --baseline .secrets.baseline $(git ls-files)
-  - language: node_js
-    env: step=Run commit lint
+      - npm run detect-secrets $(git --no-pager diff --cached --name-only)
+  - env: step=Run commit lint
     name: Run commit lint
     script:
       - commitlint-travis
