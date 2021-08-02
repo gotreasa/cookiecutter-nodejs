@@ -20,6 +20,7 @@ jobs:
   - env: step=Detect secrets in files
     name: Detect secrets in files
     script:
+      - docker pull ibmcom/detect-secrets-hook:latest
       - npm run detect-secrets $(git --no-pager diff --cached --name-only)
   - env: step=Run commit lint
     name: Run commit lint
