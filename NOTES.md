@@ -1,7 +1,7 @@
 # Notes
 
 **Labels**  
-done  
+✅ done  
 🚧 WIP  
 ❌ ERROR  
 TODO:  
