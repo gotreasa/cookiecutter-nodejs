@@ -3,17 +3,50 @@
     "commonjs": true,
     "es2021": true,
     "node": true,
-    "jest/globals": true
+    "jest/globals": true,
+    "jest": true
   },
-  "extends": ["airbnb-base", "plugin:jest/recommended", "plugin:jest/style"],
+  "extends": [
+    "airbnb-base",
+    "plugin:jest/recommended",
+    "plugin:jest-formatting/recommended",
+    "plugin:jest/style",
+    // https://github.com/prettier/eslint-config-plugin
+    // by adding this config last, we can overwrite any other styling rules from eslint configs
+    "plugin:prettier/recommended"
+  ],
   "parserOptions": {
     "ecmaVersion": 12
   },
-  "plugins": ["jest"],
+  "plugins": ["jest-formatting", "jest"],
   "rules": {
+    "camelcase": 0,
+    "jest/expect-expect": [
+      "error",
+      {
+        "assertFunctionNames": ["expect", "request.**.expect"]
+      }
+    ],
     "jest/no-standalone-expect": [
       "error",
-      { "additionalTestBlockFunctions": ["Given", "When", "Then"] }
+      {
+        "additionalTestBlockFunctions": ["Given", "When", "Then"]
+      }
+    ],
+    "no-underscore-dangle": 0,
+    "no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "next"
+      }
+    ],
+    "padding-line-between-statements": [
+      "error",
+      {
+        "blankLine": "always",
+        "next": "return",
+        "prev": "*"
+      }
     ]
   }
 }

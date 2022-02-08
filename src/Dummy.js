@@ -1,3 +1,2 @@
-class Dummy {
-}
+class Dummy {}
 module.exports = Dummy;
