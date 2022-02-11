@@ -11,6 +11,7 @@
     "plugin:jest/recommended",
     "plugin:jest-formatting/recommended",
     "plugin:jest/style",
+    "plugin:sonarjs/recommended",
     // https://github.com/prettier/eslint-config-plugin
     // by adding this config last, we can overwrite any other styling rules from eslint configs
     "plugin:prettier/recommended"
@@ -18,7 +19,7 @@
   "parserOptions": {
     "ecmaVersion": 12
   },
-  "plugins": ["jest-formatting", "jest"],
+  "plugins": ["jest-formatting", "jest", "sonarjs"],
   "rules": {
     "camelcase": 0,
     "jest/expect-expect": [
