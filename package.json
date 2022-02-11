@@ -35,7 +35,7 @@
     "test:bdd": "jest ./features --verbose",
     "test:bdd:watch": "npm run test:bdd -- --watchAll",
     "test:security": "snyk test",
-    "test:security:dev": "snyk test --dev",
+    "test:security:dev": "npm run test:security -- --dev",
     "test:unit": "jest ./test --verbose",
     "test:unit:watch": "npm run test:unit -- --watchAll",
     "typesync": "typesync ./package.json"
