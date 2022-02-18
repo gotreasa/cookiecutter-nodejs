@@ -20,7 +20,7 @@ jobs:
   - env: step=Detect secrets in files
     name: Detect secrets in files
     script:
-      - npm run detect-secrets $(git --no-pager diff --cached --name-only)
+      - npm run detect-secrets $(git ls-files)
   - env: step=Run commit lint
     name: Run commit lint
     script:
