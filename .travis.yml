@@ -25,6 +25,10 @@ jobs:
     name: Run commit lint
     script:
       - commitlint-travis
+  - env: step=Run ESLint check
+    name: Run ESLint check
+    script:
+      - npm run lint:verify
   - env: step=Run Prettier check
     name: Run Prettier check
     script:

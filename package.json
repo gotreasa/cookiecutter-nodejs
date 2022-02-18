@@ -19,7 +19,8 @@
     "detect-secrets:audit": "cross-env-shell docker run -it --rm -v ${INIT_CWD}:/code ibmcom/detect-secrets:0.13.1.ibm.47.dss audit .secrets.baseline",
     "detect-secrets:exclude": "cross-env-shell docker run --rm -v ${INIT_CWD}:/code ibmcom/detect-secrets:0.13.1.ibm.47.dss scan --update .secrets.baseline --exclude-files",
     "detect-secrets:update-baseline": "cross-env-shell docker run --rm -v ${INIT_CWD}:/code ibmcom/detect-secrets:0.13.1.ibm.47.dss scan --update .secrets.baseline",
-    "lint": "eslint --cache --fix",
+    "lint:fix": "eslint --cache --fix",
+    "lint:verify": "eslint .",
     "postinstall": "npm run requirements-check",
     "pre-push": "npm-run-all test test:security",
     "precommit": "lint-staged --relative --verbose",
@@ -27,7 +28,7 @@
     "prettier:fix": "prettier --write",
     "prettier:verify": "prettier --check \"*.{js,css,md,yml,json}\"",
     "requirements-check": "node check_node_version.js",
-    "start": "node src/template-nodejs.js",
+    "start": "npm run start:app",
     "start:app": "node app.js",
     "start:app:dev": "nodemon app.js",
     "start:swagger": "docker run --rm -p 3080:8080 -e SWAGGER_JSON=/definition/openapi.yml -v $(pwd)/test/mock/openapi.yaml:/definition/openapi.yaml swaggerapi/swagger-ui:latest",
@@ -39,22 +40,21 @@
     "test:security": "snyk test",
     "test:security:dev": "npm run test:security -- --dev",
     "test:unit": "jest ./test --verbose",
-    "test:unit:watch": "npm run test:unit -- --watchAll",
-    "typesync": "typesync ./package.json"
+    "test:unit:watch": "npm run test:unit -- --watchAll"
   },
   "lint-staged": {
     "*": [
       "npm run detect-secrets"
     ],
     "*.js": [
-      "eslint --fix"
+      "npm run lint:fix"
     ],
     "*.{js,css,md}": [
       "npm run prettier:fix"
     ],
     "package.json": [
-      "npm run typesync --silent",
-      "sort-package-json"
+      "sort-package-json",
+      "typesync ./package.json --silent"
     ]
   },
   "dependencies": {
