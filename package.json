@@ -21,7 +21,7 @@
     "detect-secrets:update-baseline": "cross-env-shell docker run --rm -v ${INIT_CWD}:/code ibmcom/detect-secrets:0.13.1.ibm.47.dss scan --update .secrets.baseline",
     "lint": "eslint --cache --fix",
     "postinstall": "npm run requirements-check",
-    "precommit": "lint-staged",
+    "precommit": "lint-staged --relative --verbose",
     "prepare": "husky install",
     "pre-push": "npm-run-all test test:security",
     "requirements-check": "node check_node_version.js",
