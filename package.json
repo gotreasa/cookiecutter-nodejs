@@ -88,6 +88,7 @@
     "eslint-plugin-sonarjs": "^0.11.0",
     "husky": "^7.0.4",
     "jest": "^27.4.7",
+    "jest-config": "^27.5.1",
     "jest-cucumber-fusion": "^0.8.1",
     "lint-staged": "^12.2.2",
     "newman": "^5.3.1",
