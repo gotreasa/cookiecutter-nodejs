@@ -1,5 +1,5 @@
 {
-  "testEnvironment": "node",
+  "clearMocks": true,
   "collectCoverage": true,
   "coverageThreshold": {
     "global": {
@@ -9,9 +9,18 @@
       "statements": 0
     }
   },
-  "clearMocks": true,
+  "moduleFileExtensions": [
+    "js",
+    "json",
+    "jsx",
+    "ts",
+    "tsx",
+    "node",
+    "feature"
+  ],
   "resetMocks": true,
   "resetModules": true,
+  "testEnvironment": "node",
   "testMatch": [
     "**/*_steps.js",
     "**/__tests__/**/*.[jt]s?(x)",
