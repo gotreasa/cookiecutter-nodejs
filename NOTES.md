@@ -4,6 +4,6 @@
 ✅ done  
 🚧 WIP  
 ❌ ERROR  
-TODO:  
+TODO:
 
-## Pomodoro 1  
+## Pomodoro 1

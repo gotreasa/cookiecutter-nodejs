@@ -3,47 +3,45 @@ services:
   - docker
 addons:
   sonarcloud:
-    organization: "gotreasa" # the key of the org you chose at step #3
+    organization: 'gotreasa'
     token:
-      secure: "RVEfFcLiCWNTnxarYhuJgSVaOWT4vdhjcOMp7VAQA2TVbiYaLcbyY/E5/YRjziWa9g9MkuFVbGbqSRQzzTDMaOsVQ9gjV0+goPbEvSLzPgUtOdBRRCCLMYt7TKcYSdbaFavL8yPjCgBPuBzF/srH+8yluinKON7/frC/dbnjtgzHmFboP7bVwSgiCAUZa6PlJ5QiWaMQsepyDvDMyW/zKY4Y7Gwv8TbBgy9/LdmWKdQP+TjNoWQEGT2tUCfOKICWJ1xGz/J39qEpItL9MrRxWA+NkAxjqskJK/ysigTmixfskc0jwEVTH9LP1Q4aDtHLlwPA9kyD8JHgcDIPhESbHyvxhgamaWH8Q6NJzL/uF9qU4Id07UoWQ+u8mCPPJy2qBbr/+xN0yTq6qy6Hp5KXdvCF2uuegQqqo++T7SxesZlDfPwv/mDagSUpXrict2TtpAurEscJHg7Luh4FeC5pq6+sQRdoMVOHN18j+HLsYn0YkDCWoTxN21hJSaGkQh+LqeyHEAbjzWwZwRjMqpOw+cyRIpLZ0LNUMRTzh/sVfY5ZXyy/qbiEKA/f+O/jUjFJOfAPo4QgyI1raW8N+s/TgiXimxs5lWikzmUjvjkAWmMawlRK8i3Y72vm/cz54IU5SL+WMugmfWKsXH4pdPvM1srIa8AgUPtJrFqtCyF8P5o="
+      secure: 'RVEfFcLiCWNTnxarYhuJgSVaOWT4vdhjcOMp7VAQA2TVbiYaLcbyY/E5/YRjziWa9g9MkuFVbGbqSRQzzTDMaOsVQ9gjV0+goPbEvSLzPgUtOdBRRCCLMYt7TKcYSdbaFavL8yPjCgBPuBzF/srH+8yluinKON7/frC/dbnjtgzHmFboP7bVwSgiCAUZa6PlJ5QiWaMQsepyDvDMyW/zKY4Y7Gwv8TbBgy9/LdmWKdQP+TjNoWQEGT2tUCfOKICWJ1xGz/J39qEpItL9MrRxWA+NkAxjqskJK/ysigTmixfskc0jwEVTH9LP1Q4aDtHLlwPA9kyD8JHgcDIPhESbHyvxhgamaWH8Q6NJzL/uF9qU4Id07UoWQ+u8mCPPJy2qBbr/+xN0yTq6qy6Hp5KXdvCF2uuegQqqo++T7SxesZlDfPwv/mDagSUpXrict2TtpAurEscJHg7Luh4FeC5pq6+sQRdoMVOHN18j+HLsYn0YkDCWoTxN21hJSaGkQh+LqeyHEAbjzWwZwRjMqpOw+cyRIpLZ0LNUMRTzh/sVfY5ZXyy/qbiEKA/f+O/jUjFJOfAPo4QgyI1raW8N+s/TgiXimxs5lWikzmUjvjkAWmMawlRK8i3Y72vm/cz54IU5SL+WMugmfWKsXH4pdPvM1srIa8AgUPtJrFqtCyF8P5o='
 stages:
-- name: Quality checks
-- name: Test
-- name: Monitor
+  - name: Quality checks
+  - name: Test
+  - name: Monitor
 jobs:
   include:
-  - stage: Quality Checks
-    env: step=Snyk vulnerability check
-    name: Snyk vulnerability check
-    script:
-      snyk test
-  - env: step=Detect secrets in files
-    name: Detect secrets in files
-    script:
-      - npm run detect-secrets $(git ls-files)
-  - env: step=Run commit lint
-    name: Run commit lint
-    script:
-      - commitlint-travis
-  - env: step=Run ESLint check
-    name: Run ESLint check
-    script:
-      - npm run lint:verify
-  - env: step=Run Prettier check
-    name: Run Prettier check
-    script:
-      - npm run prettier:verify
-  - stage: Test
-    env: step=Run tests and Sonar Scanner
-    name: Run tests and Sonar Scanner
-    script:
-      - npm test
-      - sonar-scanner
-  - stage: Monitor
-    env: step=Run Snyk Monitor
-    name: Run Snyk Monitor
-    script:
-      snyk monitor
+    - stage: Quality Checks
+      env: step=Snyk vulnerability check
+      name: Snyk vulnerability check
+      script: snyk test
+    - env: step=Detect secrets in files
+      name: Detect secrets in files
+      script:
+        - npm run detect-secrets $(git ls-files)
+    - env: step=Run commit lint
+      name: Run commit lint
+      script:
+        - commitlint-travis
+    - env: step=Run ESLint check
+      name: Run ESLint check
+      script:
+        - npm run lint:verify
+    - env: step=Run Prettier check
+      name: Run Prettier check
+      script:
+        - npm run prettier:verify
+    - stage: Test
+      env: step=Run tests and Sonar Scanner
+      name: Run tests and Sonar Scanner
+      script:
+        - npm test
+        - sonar-scanner
+    - stage: Monitor
+      env: step=Run Snyk Monitor
+      name: Run Snyk Monitor
+      script: snyk monitor
 env:
   global:
     # SYNK_TOKEN

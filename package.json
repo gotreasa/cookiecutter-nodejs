@@ -49,7 +49,7 @@
     "*.js": [
       "npm run lint:fix"
     ],
-    "*.{js,css,md}": [
+    "*.{js,css,md,yml}": [
       "npm run prettier:fix"
     ],
     "package.json": [

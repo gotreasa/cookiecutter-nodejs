@@ -5,4 +5,4 @@
 [![Build Status](https://travis.ibm.com/GOTREASA/template-nodejs.svg?token=qUvyKZdxoFqWxS8YbzZZ&branch=main)](https://travis.ibm.com/GOTREASA/template-nodejs)
 
 API: [https://template-nodejs-app.wdc1a.ciocloud.nonprod.intranet.ibm.com/api/v1/dummy]  
-Swagger: [https://template-nodejs-swagger-ui.wdc1a.ciocloud.nonprod.intranet.ibm.com/]  
+Swagger: [https://template-nodejs-swagger-ui.wdc1a.ciocloud.nonprod.intranet.ibm.com/]

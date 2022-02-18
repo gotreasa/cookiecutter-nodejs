@@ -1,9 +1,9 @@
-openapi: "3.0.3"
+openapi: '3.0.3'
 info:
   title: Template NodeJS & Express API
   description: Template NodeJS & Express API for testing.
   version: 1.0.0
-servers: 
+servers:
   - url: http://localhost:9080/api/v1
   - url: https://template-nodejs-app.wdc1a.ciocloud.nonprod.intranet.ibm.com/api/v1
 paths:
@@ -14,7 +14,7 @@ paths:
       responses:
         200:
           description: OK
-          content: 
+          content:
             application/json:
               schema:
                 type: object

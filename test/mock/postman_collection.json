@@ -13,12 +13,8 @@
           "type": "text/plain"
         },
         "url": {
-          "path": [
-            "dummy"
-          ],
-          "host": [
-            "{{baseUrl}}"
-          ],
+          "path": ["dummy"],
+          "host": ["{{baseUrl}}"],
           "query": [],
           "variable": []
         },
@@ -33,12 +29,8 @@
           "name": "OK",
           "originalRequest": {
             "url": {
-              "path": [
-                "dummy"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
+              "path": ["dummy"],
+              "host": ["{{baseUrl}}"],
               "query": [],
               "variable": []
             },
