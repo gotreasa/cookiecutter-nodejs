@@ -25,6 +25,10 @@ jobs:
     name: Run commit lint
     script:
       - commitlint-travis
+  - env: step=Run Prettier check
+    name: Run Prettier check
+    script:
+      - npm run prettier:verify
   - stage: Test
     env: step=Run tests and Sonar Scanner
     name: Run tests and Sonar Scanner

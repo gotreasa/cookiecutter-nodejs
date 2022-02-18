@@ -21,9 +21,11 @@
     "detect-secrets:update-baseline": "cross-env-shell docker run --rm -v ${INIT_CWD}:/code ibmcom/detect-secrets:0.13.1.ibm.47.dss scan --update .secrets.baseline",
     "lint": "eslint --cache --fix",
     "postinstall": "npm run requirements-check",
+    "pre-push": "npm-run-all test test:security",
     "precommit": "lint-staged --relative --verbose",
     "prepare": "husky install",
-    "pre-push": "npm-run-all test test:security",
+    "prettier:fix": "prettier --write",
+    "prettier:verify": "prettier --check \"*.{js,css,md,yml,json}\"",
     "requirements-check": "node check_node_version.js",
     "start": "node src/template-nodejs.js",
     "start:app": "node app.js",
@@ -48,7 +50,7 @@
       "eslint --fix"
     ],
     "*.{js,css,md}": [
-      "prettier --write"
+      "npm run prettier:fix"
     ],
     "package.json": [
       "npm run typesync --silent",
