@@ -28,6 +28,7 @@
     "prettier:fix": "prettier --write",
     "prettier:verify": "prettier --check \"*.{js,css,md,yml,json}\"",
     "requirements-check": "node check_node_version.js",
+    "save": "./scripts/save.sh",
     "start": "npm run start:app",
     "start:app": "node app.js",
     "start:app:watch": "nodemon app.js",
