@@ -1,0 +1,61 @@
+{
+	"User story": {
+	  "scope": "markdown",
+	  "prefix": "us",
+	  "body": [
+		"### US${1:1} ⚠",
+		"```",
+		"As a $2,",
+		"I want $3,",
+		"so that $4.",
+		"```",
+		"",
+		"#### UAT$1.1 ⚠",
+		"```",
+		"  Given $5",
+		"  When $6",
+		"  Then $7",
+		"```",
+		""
+	  ],
+	  "description": "User story template."
+	},
+	"User acceptance test": {
+	  "scope": "markdown",
+	  "prefix": "uat",
+	  "body": [
+		"#### UAT$1.$2 ⚠",
+		"```",
+		"  Given $3",
+		"  When $4",
+		"  Then $5",
+		"```",
+		""
+	  ],
+	  "description": "User acceptance test template."
+	},
+	"Todo": {
+	  "scope": "markdown",
+	  "prefix": ["todo", "warning"],
+	  "body": "⚠",
+	  "description": "Warning emoji"
+	},
+	"In progress": {
+	  "scope": "markdown",
+	  "prefix": ["ip"],
+	  "body": "🚧",
+	  "description": "In progress emoji"
+	},
+	"Done": {
+	  "scope": "markdown",
+	  "prefix": ["ok", "done"],
+	  "body": "✅",
+	  "description": "Done emoji"
+	},
+	"Error": {
+	  "scope": "markdown",
+	  "prefix": ["err"],
+	  "body": "❌",
+	  "description": "Error emoji"
+	}
+}
