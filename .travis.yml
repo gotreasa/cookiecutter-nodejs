@@ -7,12 +7,15 @@ addons:
     token:
       secure: 'RVEfFcLiCWNTnxarYhuJgSVaOWT4vdhjcOMp7VAQA2TVbiYaLcbyY/E5/YRjziWa9g9MkuFVbGbqSRQzzTDMaOsVQ9gjV0+goPbEvSLzPgUtOdBRRCCLMYt7TKcYSdbaFavL8yPjCgBPuBzF/srH+8yluinKON7/frC/dbnjtgzHmFboP7bVwSgiCAUZa6PlJ5QiWaMQsepyDvDMyW/zKY4Y7Gwv8TbBgy9/LdmWKdQP+TjNoWQEGT2tUCfOKICWJ1xGz/J39qEpItL9MrRxWA+NkAxjqskJK/ysigTmixfskc0jwEVTH9LP1Q4aDtHLlwPA9kyD8JHgcDIPhESbHyvxhgamaWH8Q6NJzL/uF9qU4Id07UoWQ+u8mCPPJy2qBbr/+xN0yTq6qy6Hp5KXdvCF2uuegQqqo++T7SxesZlDfPwv/mDagSUpXrict2TtpAurEscJHg7Luh4FeC5pq6+sQRdoMVOHN18j+HLsYn0YkDCWoTxN21hJSaGkQh+LqeyHEAbjzWwZwRjMqpOw+cyRIpLZ0LNUMRTzh/sVfY5ZXyy/qbiEKA/f+O/jUjFJOfAPo4QgyI1raW8N+s/TgiXimxs5lWikzmUjvjkAWmMawlRK8i3Y72vm/cz54IU5SL+WMugmfWKsXH4pdPvM1srIa8AgUPtJrFqtCyF8P5o='
 stages:
-  - name: Quality checks
-  - name: Test
-  - name: Monitor
+- name: Quality
+- name: Test
+- name: Build
+- name: Deploy
+- name: Smoke Test
+- name: Monitor
 jobs:
   include:
-    - stage: Quality Checks
+    - stage: Quality
       env: step=Snyk vulnerability check
       name: Snyk vulnerability check
       script: snyk test
@@ -38,6 +41,29 @@ jobs:
       script:
         - npm test
         - sonar-scanner
+    - env: step=Run contract tests
+      name: Run contract tests
+      before_script: 
+        - npm start &
+      script:
+        - npm run build:postman
+        - npm run test:api
+    - stage: Build
+      env: step=Build and Publish image
+      name: Build and Publish image
+      script:
+        - ./scripts/buildAndPublish.sh
+    - stage: Deploy
+      env: step=Deploy the images
+      name: Deploy the images
+      script:
+        - ./scripts/deploy.sh
+    - stage: Smoke Test	
+      env: step=Run contract tests	
+      name: Run contract tests	
+      script:	
+        - npm run build:postman
+        - npm run test:api -- --env-var "baseUrl=$APP_HOST"
     - stage: Monitor
       env: step=Run Snyk Monitor
       name: Run Snyk Monitor
