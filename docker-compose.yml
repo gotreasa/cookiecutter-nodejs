@@ -1,9 +1,9 @@
 version: '3.4'
 
 services:
-  templatenodejs:
-    image: templatenodejs
-    container_name: template-nodejs
+  template-nodejs: # TODO rename
+    image: template-nodejs # TODO rename
+    container_name: template-nodejs # TODO rename
     build:
       context: .
       dockerfile: ./Dockerfile
@@ -13,11 +13,10 @@ services:
       - 9080:9080
 
   swagger:
-    image: swaggerapi/swagger-ui
+    image: swagger-ui
     container_name: swagger-ui
-    environment:
-      SWAGGER_JSON: /definition/openapi.yml
-    volumes:
-      - ./test/mock/openapi.yml:/definition/openapi.yml
+    build:
+      context: .
+      dockerfile: ./Dockerfile-swagger
     ports:
-      - 3080:8080
+      - 8080:8080
