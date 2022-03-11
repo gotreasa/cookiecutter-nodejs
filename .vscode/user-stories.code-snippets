@@ -3,14 +3,14 @@
 	  "scope": "markdown",
 	  "prefix": "us",
 	  "body": [
-		"### US${1:1} ⚠",
+		"### ⚠ US${1:1}",
 		"```",
 		"As a $2,",
 		"I want $3,",
 		"so that $4.",
 		"```",
 		"",
-		"#### UAT$1.1 ⚠",
+		"#### ⚠ UAT$1.1",
 		"```",
 		"  Given $5",
 		"  When $6",
@@ -24,7 +24,7 @@
 	  "scope": "markdown",
 	  "prefix": "uat",
 	  "body": [
-		"#### UAT$1.$2 ⚠",
+		"#### ⚠ UAT$1.$2",
 		"```",
 		"  Given $3",
 		"  When $4",
@@ -57,5 +57,12 @@
 	  "prefix": ["err"],
 	  "body": "❌",
 	  "description": "Error emoji"
+	},
+	"Pomodoro": {
+	  "scope": "markdown",
+	  "prefix": ["pom", "pomodoro"],
+	  "body": ["## Pomodoro $1", "", "Driver: $2  ", "Navigator: $3  ", "", "- ⚠ $4", ""],
+	  "description": "Pomodoro template"
 	}
-}
+  }
+  
