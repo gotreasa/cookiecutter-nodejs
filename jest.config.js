@@ -3,6 +3,7 @@ const { defaults } = require('jest-config');
 module.exports = {
   clearMocks: true,
   collectCoverage: true,
+  verbose: true,
   coverageThreshold: {
     global: {
       branches: 100,
