@@ -30,7 +30,7 @@
     "start": "npm run start:app",
     "start:app": "node app.js",
     "start:app:watch": "nodemon app.js",
-    "start:swagger": "docker run --rm -p 3080:8080 -e SWAGGER_JSON=/definition/openapi.yml -v $(pwd)/test/mock/openapi.yaml:/definition/openapi.yaml swaggerapi/swagger-ui:latest",
+    "start:swagger": "cross-env-shell docker run --rm -p 3080:8080 -e SWAGGER_JSON=/definition/openapi.yml -v ${INIT_CWD}/test/mock/:/definition/ swaggerapi/swagger-ui:latest",
     "test": "jest",
     "test:api": "newman run test/mock/postman_collection.json",
     "test:api:watch": "chokidar '*.js' 'src/*.js' 'test/mock/postman_collection.json' --initial -c 'npm run test:api'",
