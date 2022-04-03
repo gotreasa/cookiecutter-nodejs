@@ -12,5 +12,4 @@ Swagger: [https://template-nodejs-swagger-ui.wdc1a.ciocloud.nonprod.intranet.ibm
 - ⚠⚠⚠⚠ Replace all occurences of `template-nodejs` with your project name in all files ⚠⚠⚠⚠
 - Setup environment variables in Travis:
   - `IBMCLOUD_APIKEY`
-  - `REGISTRY_SECRET` for Docker registry
   - `APP_HOST` for smoke tests

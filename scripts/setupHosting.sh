@@ -21,8 +21,8 @@ ibmcloud ce registry create --name $IMAGE_NAMESPACE --server $IMAGE_REPOSITORY_U
 
 $SCRIPT_DIR/buildAndPublish.sh
 
-ibmcloud ce app create --name $APP_NAME --image $IMAGE_REPOSITORY_URL/$IMAGE_NAMESPACE/$APP_IMAGE --min-scale 1 --max-scale 1 --port 9080 --registry-secret $REGISTRY_SECRET
+ibmcloud ce app create --name $APP_NAME --image $IMAGE_REPOSITORY_URL/$IMAGE_NAMESPACE/$APP_IMAGE --min-scale 1 --max-scale 1 --port 9080 --registry-secret $IMAGE_NAMESPACE
 ibmcloud ce app get --name $APP_NAME --output url
 
-ibmcloud ce app create --name $SWAGGER_NAME --image $IMAGE_REPOSITORY_URL/$IMAGE_NAMESPACE/$SWAGGER_IMAGE --min-scale 1 --max-scale 1 --registry-secret $REGISTRY_SECRET
+ibmcloud ce app create --name $SWAGGER_NAME --image $IMAGE_REPOSITORY_URL/$IMAGE_NAMESPACE/$SWAGGER_IMAGE --min-scale 1 --max-scale 1 --registry-secret $IMAGE_NAMESPACE
 ibmcloud ce app get --name $SWAGGER_NAME --output url

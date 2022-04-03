@@ -14,11 +14,11 @@ ibmcloud cr login
 echo "👌 Select the app project"
 ibmcloud ce project select --name $PROJECT_NAME
 echo "💿 Update the app"
-ibmcloud ce app update --name $APP_NAME --image $IMAGE_REPOSITORY_URL/$IMAGE_NAMESPACE/$APP_IMAGE --registry-secret $REGISTRY_SECRET
+ibmcloud ce app update --name $APP_NAME --image $IMAGE_REPOSITORY_URL/$IMAGE_NAMESPACE/$APP_IMAGE --registry-secret $IMAGE_NAMESPACE
 echo "🖨 Details of the app URL"
 ibmcloud ce app get --name $APP_NAME --output url
 
 echo "💿 Update the Swagger app"
-ibmcloud ce app update --name $SWAGGER_NAME --image $IMAGE_REPOSITORY_URL/$IMAGE_NAMESPACE/$SWAGGER_IMAGE --registry-secret $REGISTRY_SECRET
+ibmcloud ce app update --name $SWAGGER_NAME --image $IMAGE_REPOSITORY_URL/$IMAGE_NAMESPACE/$SWAGGER_IMAGE --registry-secret $IMAGE_NAMESPACE
 echo "🖨 Details of the Swagger URL"
 ibmcloud ce app get --name $SWAGGER_NAME --output url
