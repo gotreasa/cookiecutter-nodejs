@@ -199,3 +199,6 @@ dist
 
 # Temporary files used for Portman
 tmp/
+
+## Pact files
+pact/
