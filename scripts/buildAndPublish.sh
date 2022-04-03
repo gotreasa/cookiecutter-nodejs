@@ -1,8 +1,5 @@
-#!/bin/sh
+#!/bin/bash
 SCRIPT_DIR=$( cd -- "$( dirname -- "$0" )" &> /dev/null && pwd )
-echo "input" "$0"
-dirname -- "$0"
-cd -- "$( dirname -- "$0" )" &> /dev/null && pwd
 . $SCRIPT_DIR/hosting.conf
 
 echo "🛠 Building images"
