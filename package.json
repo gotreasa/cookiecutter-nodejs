@@ -34,7 +34,7 @@
     "start:swagger": "cross-env-shell docker run --rm -p 3080:8080 -e SWAGGER_JSON=/definition/openapi.yml -v ${INIT_CWD}/test/mock/:/definition/ swaggerapi/swagger-ui:latest",
     "test": "npm run test:api:consumer && jest",
     "test:api": "newman run test/mock/postman_collection.json",
-    "test:api:consumer": "jest test/**/*.pact.spec.js",
+    "test:api:consumer": "jest test/**/*.consumer.pact.spec.js",
     "test:api:watch": "npm run build:postman && chokidar '*.js' 'src/*.js' 'test/mock/postman_collection.json' --initial -c 'npm run test:api'",
     "test:bdd": "jest ./features",
     "test:bdd:watch": "npm run test:bdd -- --watchAll",
