@@ -14,7 +14,8 @@ RUN npm ci
 RUN npm prune
 RUN /usr/local/bin/node-prune
 
-COPY . .
+COPY app.js ./
+COPY src src
 
 # Build final image using small base image.
 FROM node:16-alpine
