@@ -15,3 +15,5 @@ const server = app.listen('9080', () => {
     }`,
   );
 });
+
+module.exports = server;
