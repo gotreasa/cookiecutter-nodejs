@@ -47,23 +47,23 @@ case "$ACTION" in
   "chore")
     MSG="$2"
     checkNotEmpty "$MSG"
-    commit "chore: $MSG"
+    commit "chore: 🧹 $MSG"
     ;;
 
   "desc")
-    commit "docs: added kata description"
+    commit "docs: 📝 added kata description"
     ;;
 
   "p" | "plan" | "plans")
-    commit "docs: added user stories"
+    commit "docs: 📝 added user stories"
     ;;
 
   "td" | "techdebt")
-    commit "docs: updated techdebt"
+    commit "docs: 📝 updated techdebt"
     ;;
 
   "n" | "note" | "notes")
-    commit "docs: updated notes"
+    commit "docs: 📝 updated notes"
     ;;
 
   "uat")
@@ -81,24 +81,24 @@ case "$ACTION" in
     case "$PHASE" in
 
       "r" | "red")
-	      MSG=$(uatMessage feat "$US" "$UAT" "red")
+	      MSG=$(uatMessage feat "$US" "$UAT" "🔴 red")
         ;;
 
       "g" | "green")
-        MSG=$(uatMessage feat "$US" "$UAT" "green")
+        MSG=$(uatMessage feat "$US" "$UAT" "🟢 green")
         ;;
 
       "ref")
 	      checkNotEmpty "$CUSTOM_MESSAGE"
-        MSG=$(uatMessage refactor "$US" "$UAT" "$CUSTOM_MESSAGE")
+        MSG=$(uatMessage refactor "$US" "$UAT" "👩‍💻 $CUSTOM_MESSAGE")
         ;;
 
       "c" | "covered")
-        MSG=$(uatMessage test "$US" "$UAT" "added already covered test case")
+        MSG=$(uatMessage test "$US" "$UAT" "🟢 added already covered test case")
         ;;
 
       "d" | "done")
-        MSG=$(uatMessage feat "$US" "$UAT" "done")
+        MSG=$(uatMessage feat "$US" "$UAT" "🟢 done")
         ;;
 
       *)
@@ -113,7 +113,7 @@ case "$ACTION" in
     US="$2"
     checkNotEmpty "$US"
 
-    commit "feat(US$US): done"
+    commit "feat(US$US): 🟢 done"
     ;;
 
   *)
