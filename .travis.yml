@@ -39,6 +39,7 @@ jobs:
       env: step=Run tests and Sonar Scanner
       name: Run tests and Sonar Scanner
       script:
+        - touch .env
         - npm test
         - sonar-scanner
     - env: step=Run contract tests
@@ -51,6 +52,7 @@ jobs:
     - env: step=Run Pact tests
       name: Run Pact tests
       script:
+        - touch .env
         - npm run test:api:consumer
         - npm run publish:pact
         - export CI=true && npm run test:api:provider
