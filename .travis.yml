@@ -48,6 +48,12 @@ jobs:
       script:
         - npm run build:postman
         - npm run test:api
+    - env: step=Run Pact tests
+      name: Run Pact tests
+      script:
+        - npm run test:api:consumer
+        - npm run publish:pact
+        - export CI=true && npm run test:api:provider
     - stage: Build
       env: step=Build and Publish image
       name: Build and Publish image
@@ -71,4 +77,6 @@ jobs:
 env:
   global:
     # SYNK_TOKEN
-    secure: iaj1KfYIWKIc21dFaKjeAQ/nxFStGqtP2vqkMQ7d+RfO2e92JjbRkzNiXFok5+yxNJvCbUJI2GOa3CKhMOcVGlLRW0JcGY3Ga1kon9YkocANuzEEAh1IUkYXlRxiDzWI99K6HAdTPbdEXePjfiaEQN2BW8N2hqn4gwYUSzwOxwLUqhc55JKrtm9Gz3YZpqpxGFYnOm3aqaKa1hnKxpWBUyDcSVRcedfBd4eXttcqrOnEYZuDzZFr2ik2J6yIISl6Pubisewbzvqyn6AeyQ2TLOKHOstVDYflonlgPmNQpBdPlYic80sniLhXisl9buKIsKukbK0BPEGGpAydlTvARC9d6JPTyeCESiDOpJTeHBHCW0Vw/D2EPyYtpEqn8KBjR4LanqVPu+nkhDrDO3dK9r/39Ha/wlpmPkDUUPLFV2hzVUWxhPdJYKnWsvHhPgqbnMkI7BSr2VuGScS8YYAqeqa2kQe1eUouddnW/Duh/rKkLdHHdyZbjz8KECuPK5Ppzw9Sh6Vcegd0afIGmR8gA3mWeYSWPMVrd6cNVEthbJnysfQlfoH2zvPgeZXNH9u8sJznGaaRTInv6bi5Ws1dbsx+6CQM9Zr5rFd26PHojLH52JxW+O10ZALYSE+mNI4y9kgdJmLmMQFX7UOjSeFVN/W0GP2jInRtuC3BiolpNLQ=
+    - secure: iaj1KfYIWKIc21dFaKjeAQ/nxFStGqtP2vqkMQ7d+RfO2e92JjbRkzNiXFok5+yxNJvCbUJI2GOa3CKhMOcVGlLRW0JcGY3Ga1kon9YkocANuzEEAh1IUkYXlRxiDzWI99K6HAdTPbdEXePjfiaEQN2BW8N2hqn4gwYUSzwOxwLUqhc55JKrtm9Gz3YZpqpxGFYnOm3aqaKa1hnKxpWBUyDcSVRcedfBd4eXttcqrOnEYZuDzZFr2ik2J6yIISl6Pubisewbzvqyn6AeyQ2TLOKHOstVDYflonlgPmNQpBdPlYic80sniLhXisl9buKIsKukbK0BPEGGpAydlTvARC9d6JPTyeCESiDOpJTeHBHCW0Vw/D2EPyYtpEqn8KBjR4LanqVPu+nkhDrDO3dK9r/39Ha/wlpmPkDUUPLFV2hzVUWxhPdJYKnWsvHhPgqbnMkI7BSr2VuGScS8YYAqeqa2kQe1eUouddnW/Duh/rKkLdHHdyZbjz8KECuPK5Ppzw9Sh6Vcegd0afIGmR8gA3mWeYSWPMVrd6cNVEthbJnysfQlfoH2zvPgeZXNH9u8sJznGaaRTInv6bi5Ws1dbsx+6CQM9Zr5rFd26PHojLH52JxW+O10ZALYSE+mNI4y9kgdJmLmMQFX7UOjSeFVN/W0GP2jInRtuC3BiolpNLQ=
+    # PACT_BROKER_TOKEN
+    - secure: jEznHh6sCorX/r8bRRzPo3trKfR7QfqCz8qVWqX+1cmjRIrj6F1Jda4h9DSNwgyTu0utZFdXitpcatQzKLvcvpdHMP1B6qbTw7lMQdnw3D4gZymDebC2rpSsennV2zJB9Cqw/add97JVWZpJkI2A1umEIGnOPw9U35iU88u4XB9znC6eUl8goAyGAQir99NX2a5FoWoVqjXSUP1+6rv4QxY2CzTY6I7VNZhatMUmCCGQksy4MEnR/a1S57TX1gVIE22gCNJMPHNqOw/nlHbTNLLymOd9zc+JCmsAyqJ0txk+nTKL3u7cNcXp2xqGl6UKAems3P6D2mNNRhMnuLjczG9n9t6VbelOlOKl+MPAnIkgg6q5ASpWNocLcZjWDsQc4M+wJFbZsvwv6K7+xSd280esASyt0VL/fyARo3HvOt3gL+r6BfKgJylHRRxE/wC54StgGipY/fNQuTPFnhdPJUAB0B8xgndnqp8pVHbfA63cmc1JPNuey5ZQvqrKSDVWZiiHuk+Xy/HXaqq/0JdWt1Enzq8qi5J5l32eeOAiJFmlqD1QRTpPC8CrcJZ6lo7sJBbKpq6m61YFdyw/zOBYrBsY16CG2pcVbcay5buh7PFPAZ+JuzW90jJgfbFMT8zRGQtEhRueziwpMrPA0QMvjxEkHjgL+0onKYUszFlwghY=
