@@ -20,7 +20,7 @@ const providerOptions = {
 
 if (process.env.CI || process.env.PACT_PUBLISH_RESULTS) {
   Object.assign(providerOptions, {
-    pactBrokerUrl: 'https://gotreasa.pact.dius.com.au/',
+    pactBrokerUrl: 'https://gotreasa.pactflow.io/',
     publishVerificationResult: true,
   });
 } else {
