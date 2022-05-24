@@ -33,19 +33,19 @@
     "start:app": "export SERVER_PORT=9080 && node app.js",
     "start:app:watch": "export SERVER_PORT=9080 && nodemon app.js",
     "start:swagger": "cross-env-shell docker run --rm -p 3080:8080 -e SWAGGER_JSON=/definition/openapi.yml -v ${INIT_CWD}/test/mock/:/definition/ swaggerapi/swagger-ui:latest",
-    "test": "export SERVER_PORT=9999 && npm run test:api:consumer && env-cmd jest --testTimeout 30000",
-    "test:api": "newman run test/mock/postman_collection.json",
+    "test": "export SERVER_PORT=9999 && npm run test:api:consumer && npm run publish:pact && env-cmd jest --testTimeout 30000",
+    "test:api": "npm run build:postman && newman run test/mock/postman_collection.json -r cli,json",
     "test:api:consumer": "jest test/**/*.consumer.pact.spec.js",
-    "test:api:consumer:watch": "npm run test:api:consumer -- --watchAll",
-    "test:api:provider": "export SERVER_PORT=9999 && env-cmd jest --testTimeout 30000 test/**/*.provider.pact.spec.js",
-    "test:api:provider:watch": "npm run test:api:provider -- --watchAll",
-    "test:api:watch": "npm run build:postman && chokidar '*.js' 'src/*.js' 'test/mock/postman_collection.json' --initial -c 'npm run test:api'",
+    "test:api:consumer:watch": "npm run test:api:consumer -- --watch",
+    "test:api:provider": "export SERVER_PORT=9999 && env-cmd jest test/**/*.provider.pact.spec.js --testTimeout 30000",
+    "test:api:provider:watch": "npm run test:api:provider -- --watch",
+    "test:api:watch": "npm run build:postman && chokidar '*.js' 'src/**/*.js' 'test/mock/postman_collection.json' --initial -c 'npm run test:api'",
     "test:bdd": "jest ./features",
-    "test:bdd:watch": "npm run test:bdd -- --watchAll",
+    "test:bdd:watch": "npm run test:bdd -- --watch",
     "test:security": "snyk test",
     "test:security:dev": "npm run test:security -- --dev",
-    "test:unit": "jest ./test",
-    "test:unit:watch": "npm run test:unit -- --watchAll"
+    "test:unit": "jest ./test --testPathIgnorePatterns test/**/*.pact.spec.js",
+    "test:unit:watch": "npm run test:unit -- --watch"
   },
   "lint-staged": {
     "*": [
@@ -63,7 +63,6 @@
     ]
   },
   "dependencies": {
-    "@pact-foundation/pact-node": "^10.17.2",
     "cors": "^2.8.5",
     "express": "^4.17.2",
     "helmet": "^5.0.1",
@@ -76,6 +75,7 @@
     "@commitlint/travis-cli": "^16.2.1",
     "@pact-foundation/absolute-version": "^0.0.4",
     "@pact-foundation/pact": "^9.17.3",
+    "@pact-foundation/pact-node": "^10.17.2",
     "@types/cors": "^2.8.12",
     "@types/eslint": "^8.4.1",
     "@types/eslint-plugin-prettier": "^3.1.0",
