@@ -25,5 +25,3 @@ ibmcloud ce app create --name $APP_NAME --image $IMAGE_REPOSITORY_URL/$IMAGE_NAM
 travis env set IBMCLOUD_APIKEY $IBMCLOUD_APIKEY --private
 travis env set REGISTRY_SECRET $IMAGE_NAMESPACE --private
 travis env set APP_HOST $(ibmcloud ce app get --name $APP_NAME --output url) --public
-
-ibmcloud ce app create --name $SWAGGER_NAME --image $IMAGE_REPOSITORY_URL/$IMAGE_NAMESPACE/$SWAGGER_IMAGE --min-scale 1 --max-scale 1 --registry-secret $IMAGE_NAMESPACE

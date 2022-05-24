@@ -32,7 +32,6 @@
     "start": "export SERVER_PORT=9080 && npm run start:app",
     "start:app": "export SERVER_PORT=9080 && node app.js",
     "start:app:watch": "export SERVER_PORT=9080 && nodemon app.js",
-    "start:swagger": "cross-env-shell docker run --rm -p 3080:8080 -e SWAGGER_JSON=/definition/openapi.yml -v ${INIT_CWD}/test/mock/:/definition/ swaggerapi/swagger-ui:latest",
     "test": "export SERVER_PORT=9999 && npm run test:api:consumer && npm run publish:pact && env-cmd jest --testTimeout 30000",
     "test:api": "npm run build:postman && newman run test/mock/postman_collection.json -r cli,json",
     "test:api:consumer": "jest test/**/*.consumer.pact.spec.js",

@@ -11,12 +11,3 @@ services:
       NODE_ENV: production
     ports:
       - 9080:9080
-
-  swagger:
-    image: swagger-ui
-    container_name: swagger-ui
-    build:
-      context: .
-      dockerfile: ./Dockerfile-swagger
-    ports:
-      - 8080:8080

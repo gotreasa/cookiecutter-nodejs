@@ -1,7 +1,0 @@
-FROM swaggerapi/swagger-ui:latest as BUILD
-
-WORKDIR /
-
-COPY test/mock/openapi.yml /
-
-ENV SWAGGER_JSON /openapi.yml
