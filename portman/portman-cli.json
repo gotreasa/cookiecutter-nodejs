@@ -1,5 +1,5 @@
 {
-  "local": "test/mock/openapi.json",
+  "local": "openapi.json",
   "output": "test/mock/postman_collection.json",
   "portmanConfigFile": "portman/portman-config.json",
   "includeTests": true,

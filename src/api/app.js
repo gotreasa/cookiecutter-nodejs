@@ -2,7 +2,7 @@ const express = require('express');
 const helmet = require('helmet');
 
 const swaggerUi = require('swagger-ui-express');
-const openApiSpecification = require('../../test/mock/openapi.json');
+const openApiSpecification = require('../../openapi.json');
 
 const app = express();
 app.use(helmet());

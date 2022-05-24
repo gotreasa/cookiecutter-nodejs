@@ -15,6 +15,7 @@ RUN npm prune
 RUN /usr/local/bin/node-prune
 
 COPY app.js ./
+COPY openapi.json ./
 COPY src src
 
 # Build final image using small base image.
