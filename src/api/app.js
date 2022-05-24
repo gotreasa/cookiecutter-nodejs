@@ -1,11 +1,13 @@
 const express = require('express');
 const helmet = require('helmet');
-const cors = require('cors');
+
+const swaggerUi = require('swagger-ui-express');
+const openApiSpecification = require('../../test/mock/openapi.json');
 
 const app = express();
 app.use(helmet());
-app.use(cors());
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openApiSpecification));
 app.get('/api/v1/dummy', (_, response) => response.status(200).json());
 
 module.exports = app;
