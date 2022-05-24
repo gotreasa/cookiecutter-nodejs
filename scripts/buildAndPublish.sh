@@ -2,9 +2,9 @@
 SCRIPT_DIR=$( cd -- "$( dirname -- "$0" )" &> /dev/null && pwd )
 . $SCRIPT_DIR/hosting.conf
 
-echo "🛠 Building images"
+echo "🛠 Building docker image"
 docker-compose build --parallel
-echo "✅ Completed building the images"
+echo "✅ Completed building the image"
 
 
 checkIbmcloudCli
