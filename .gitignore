@@ -205,3 +205,6 @@ pact/
 
 ## Postman Collection
 test/mock/postman_collection.json
+
+## Newman
+newman/
