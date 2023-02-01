@@ -40,7 +40,7 @@ describe('Test Dummy Provider', () => {
     try {
       const output = await new Verifier(providerOptions).verifyProvider();
       console.log(output);
-      expect(output).toContain('0 failures');
+      expect(output).toContain('finished: 0');
     } catch (error) {
       console.log(error.message);
       // eslint-disable-next-line jest/no-conditional-expect

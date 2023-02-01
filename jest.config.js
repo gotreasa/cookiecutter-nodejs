@@ -13,6 +13,7 @@ module.exports = {
     },
   },
   moduleFileExtensions: [...defaults.moduleFileExtensions, 'feature'],
+  moduleNameMapper: { '^uuid$': 'uuid' },
   resetMocks: true,
   resetModules: true,
   testEnvironment: 'node',
