@@ -41,7 +41,7 @@
     "test:api:watch": "npm run build:postman && chokidar '*.js' 'src/**/*.js' 'test/mock/postman_collection.json' --initial -c 'npm run test:api'",
     "test:bdd": "jest ./features",
     "test:bdd:watch": "npm run test:bdd -- --watch",
-    "test:security": "snyk test",
+    "test:security": "env-cmd snyk test",
     "test:security:dev": "npm run test:security -- --dev",
     "test:unit": "jest ./test --testPathIgnorePatterns test/**/*.pact.spec.js",
     "test:unit:watch": "npm run test:unit -- --watch"
