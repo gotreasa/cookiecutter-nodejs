@@ -4,7 +4,7 @@ const path = require('path');
 
 const options = {
   pactFilesOrDirs: [path.resolve(__dirname, '../../pact/pacts')],
-  pactBroker: 'https://gotreasa.pactflow.io/',
+  pactBroker: 'https://{{cookiecutter.pact_flow_username}}.pactflow.io/',
   pactBrokerToken: process.env.PACT_BROKER_TOKEN,
   consumerVersion: versionFromGitTag(),
   tags: ['dev'],

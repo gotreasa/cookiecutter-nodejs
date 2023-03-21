@@ -48,6 +48,12 @@
         "next": "return",
         "prev": "*"
       }
+    ],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": ["**/*.pacts.js", "**/*.spec.js", "jest.config.js"]
+      }
     ]
   }
 }

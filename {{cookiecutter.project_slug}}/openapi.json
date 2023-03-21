@@ -10,7 +10,7 @@
       "url": "http://localhost:9080"
     },
     {
-      "url": "https://template-nodejs-app.lczugnccqc5.eu-de.codeengine.appdomain.cloud"
+      "url": "https://{{cookiecutter.project_slug}}-app.lczugnccqc5.eu-de.codeengine.appdomain.cloud"
     }
   ],
   "paths": {

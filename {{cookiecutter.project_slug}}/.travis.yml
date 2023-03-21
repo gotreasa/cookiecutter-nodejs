@@ -1,9 +1,6 @@
 language: node_js
 services:
   - docker
-addons:
-  sonarcloud:
-    organization: 'gotreasa'
 stages:
   - name: Quality
   - name: Test
@@ -39,7 +36,7 @@ jobs:
       script:
         - touch .env
         - npm test
-        - sonar-scanner
+        - npx sonar-scanner
     - env: step=Run contract tests
       name: Run contract tests
       before_script:

@@ -1,0 +1,18 @@
+{
+    "full_name": "Gearoid O'Treasaigh",
+    "project_name": "NodeJS Project",
+    "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '-') }}",
+    "description": "{{cookiecutter.project_name}} repository",
+    "github_url": ["github.ibm.com", "github.com"],
+    "github_org": "xpfarm",
+    "github_username": "{{cookiecutter.github_org}}",
+    "pact_flow_username": "{{ cookiecutter.github_username.lower() }}",
+    "sonar_org": "{{ cookiecutter.github_username.lower() }}",
+    "ibm_cloud_api_key": "",
+    "pact_broker_token": "",
+    "sonar_token": "",
+    "snyk_token": "",
+
+    "license": ["Apache-2.0", "AGPL", "GPL", "ISC", "MIT"],
+    "_copy_without_render": [".github/workflows/sonar-nodejs-analysis.yml", ".github/workflows/snyk-nodejs-analysis.yml", "node_modules/", ".vscode/"]
+}
