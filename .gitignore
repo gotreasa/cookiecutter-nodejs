@@ -208,3 +208,4 @@ test/mock/postman_collection.json
 
 ## Newman
 newman/
+.vscode/settings.json

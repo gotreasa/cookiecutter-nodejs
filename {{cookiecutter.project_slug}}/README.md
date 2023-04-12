@@ -6,9 +6,6 @@
 
 API: [https://{{cookiecutter.project_slug}}-app.wdc1a.ciocloud.nonprod.intranet.ibm.com/api/v1/dummy]
 
-## TODO
+## Description
 
-- ⚠⚠⚠⚠ Replace all occurences of `{{cookiecutter.project_slug}}` with your project name in all files ⚠⚠⚠⚠
-- Setup environment variables in Travis:
-  - `IBMCLOUD_APIKEY`
-  - `APP_HOST` for smoke tests
+{{cookiecutter.description}}
