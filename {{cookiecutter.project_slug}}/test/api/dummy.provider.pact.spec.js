@@ -3,9 +3,16 @@ const { versionFromGitTag } = require('@pact-foundation/absolute-version');
 const { Verifier } = require('@pact-foundation/pact');
 const server = require('../../app');
 
+let baseUrl;
+if (process.env.SMOKE_TEST) {
+  baseUrl = process.env.APP_HOST;
+} else {
+  baseUrl = `http://localhost:${process.env.SERVER_PORT || 9080}`;
+}
+
 const providerOptions = {
   logLevel: 'INFO',
-  providerBaseUrl: `http://localhost:${process.env.SERVER_PORT || 9080}`,
+  providerBaseUrl: baseUrl,
   provider: 'dummy_app',
   providerVersion: versionFromGitTag(),
   matchingRules: {
@@ -37,14 +44,8 @@ describe('Test Dummy Provider', () => {
   });
 
   test('tests dummmy api routes', async () => {
-    try {
-      const output = await new Verifier(providerOptions).verifyProvider();
-      console.log(output);
-      expect(output).toContain('finished: 0');
-    } catch (error) {
-      console.log(error.message);
-      // eslint-disable-next-line jest/no-conditional-expect
-      expect(error).toBeNull();
-    }
+    const output = await new Verifier(providerOptions).verifyProvider();
+    console.log(output);
+    expect(output).toContain('0 failures');
   });
 });

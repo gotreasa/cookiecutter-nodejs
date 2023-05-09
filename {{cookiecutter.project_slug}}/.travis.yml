@@ -6,8 +6,7 @@ stages:
   - name: Test
   - name: Build
   - name: Deploy
-  - name: Smoke Test
-  - name: Monitor
+  - name: Smoke Test & Monitoring
 jobs:
   include:
     - stage: Quality
@@ -37,13 +36,13 @@ jobs:
         - touch .env
         - npm test
         - npx sonar-scanner
-    - env: step=Run contract tests
-      name: Run contract tests
-      before_script:
-        - npm start &
-      script:
-        - npm run build:postman
-        - npm run test:api
+    # - env: step=Run contract tests
+    #   name: Run contract tests
+    #   before_script:
+    #     - npm start &
+    #   script:
+    #     - npm run build:postman
+    #     - npm run test:api
     - env: step=Run Pact tests
       name: Run Pact tests
       script:
@@ -61,13 +60,12 @@ jobs:
       name: Deploy the images
       script:
         - ./scripts/deploy.sh
-    - stage: Smoke Test
-      env: step=Run contract tests
-      name: Run contract tests
+    - stage: Smoke Test & Monitoring
+      env: step=Smoke test using pact tests
+      name: Smoke test using pact tests
       script:
-        - npm run build:postman
-        - npm run test:api -- --env-var "baseUrl=$APP_HOST"
-    - stage: Monitor
-      env: step=Run Snyk Monitor
+        - touch .env
+        - export SMOKE_TEST=true && npm run test:api:provider -- --collectCoverage=false
+    - env: step=Run Snyk Monitor
       name: Run Snyk Monitor
       script: snyk monitor
