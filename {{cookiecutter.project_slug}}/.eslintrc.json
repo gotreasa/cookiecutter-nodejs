@@ -31,7 +31,7 @@
     "jest/no-standalone-expect": [
       "error",
       {
-        "additionalTestBlockFunctions": ["Given", "When", "Then"]
+        "additionalTestBlockFunctions": ["Then", "And"]
       }
     ],
     "no-underscore-dangle": 0,
@@ -47,12 +47,6 @@
         "blankLine": "always",
         "next": "return",
         "prev": "*"
-      }
-    ],
-    "import/no-extraneous-dependencies": [
-      "error",
-      {
-        "devDependencies": ["**/*.pacts.js", "**/*.spec.js", "jest.config.js"]
       }
     ]
   }

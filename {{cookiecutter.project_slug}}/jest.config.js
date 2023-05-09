@@ -18,4 +18,5 @@ module.exports = {
   resetModules: true,
   testEnvironment: 'node',
   testMatch: [...defaults.testMatch, '**/*_steps.js'],
+  watchPathIgnorePatterns: ['pact/logs/*', 'pact/pacts/*'],
 };
