@@ -16,10 +16,10 @@
   "scripts": {
     "build:postman": "portman --cliOptionsFile portman/portman-cli.json",
     "clean": "rimraf pact",
-    "detect-secrets": "cross-env-shell docker run --rm -v ${INIT_CWD}:/code icr.io/git-defenders/detect-secrets-hook:0.13.1.ibm.56.dss --baseline .secrets.baseline",
-    "detect-secrets:audit": "cross-env-shell docker run -it --rm -v ${INIT_CWD}:/code icr.io/git-defenders/detect-secrets:0.13.1.ibm.56.dss audit --report --fail-on-unaudited --fail-on-live --fail-on-audited-real .secrets.baseline",
-    "detect-secrets:exclude": "cross-env-shell docker run --rm -v ${INIT_CWD}:/code icr.io/git-defenders/detect-secrets:0.13.1.ibm.56.dss scan --update .secrets.baseline --exclude-files",
-    "detect-secrets:update-baseline": "cross-env-shell docker run --rm -v ${INIT_CWD}:/code icr.io/git-defenders/detect-secrets:0.13.1.ibm.56.dss scan --update .secrets.baseline",
+    "detect-secrets": "cross-env-shell docker run --platform linux/amd64 --rm -v ${INIT_CWD}:/code icr.io/git-defenders/detect-secrets-hook:0.13.1.ibm.56.dss --baseline .secrets.baseline",
+    "detect-secrets:audit": "cross-env-shell docker run -it --platform linux/amd64 --rm -v ${INIT_CWD}:/code icr.io/git-defenders/detect-secrets:0.13.1.ibm.56.dss audit --report --fail-on-unaudited --fail-on-live --fail-on-audited-real .secrets.baseline",
+    "detect-secrets:exclude": "cross-env-shell docker run --platform linux/amd64 --rm -v ${INIT_CWD}:/code icr.io/git-defenders/detect-secrets:0.13.1.ibm.56.dss scan --update .secrets.baseline --exclude-files",
+    "detect-secrets:update-baseline": "cross-env-shell docker run --platform linux/amd64 --rm -v ${INIT_CWD}:/code icr.io/git-defenders/detect-secrets:0.13.1.ibm.56.dss scan --update .secrets.baseline",
     "lint:fix": "eslint --cache --fix",
     "lint:verify": "eslint .",
     "pre-push": "npm-run-all test test:security",
@@ -32,8 +32,10 @@
     "start": "export SERVER_PORT=9080 && npm run start:app",
     "start:app": "export SERVER_PORT=9080 && node app.js",
     "start:app:watch": "export SERVER_PORT=9080 && nodemon app.js",
-    "test": "export SERVER_PORT=9999 && npm run test:api:consumer && npm run publish:pact && env-cmd jest --testTimeout 30000",
+    "test": "rm -f pact/pacts/* && export SERVER_PORT=9998 && npm run test:api:consumer && npm run publish:pact && env-cmd jest --testTimeout 30000",
     "test:api": "npm run build:postman && newman run test/mock/postman_collection.json -r cli,json",
+    "test:api:all": "rm -f pact/pacts/* && export SERVER_PORT=9999 && env-cmd jest test/**/*.pact.spec.js --testTimeout 30000",
+    "test:api:all:watch": "export SERVER_PORT=9999 && env-cmd jest test/**/*.pact.spec.js --testTimeout 30000 --watch",
     "test:api:consumer": "jest test/**/*.consumer.pact.spec.js",
     "test:api:consumer:watch": "npm run test:api:consumer -- --watch",
     "test:api:provider": "export SERVER_PORT=9999 && env-cmd jest test/**/*.provider.pact.spec.js --testTimeout 30000",
@@ -110,7 +112,7 @@
     "snyk": "^1.865.0",
     "sonarqube-scanner": "^2.8.1",
     "sort-package-json": "^1.54.0",
-    "typesync": "^0.8.0"
+    "typesync": "^0.11.0"
   },
   "engines": {
     "node": "v18.15.0"
