@@ -1,0 +1,37 @@
+name: {{ cookiecutter.project_slug }}
+
+# The build section defines how to build the images of your development environment
+# More info: https://www.okteto.com/docs/reference/manifest/#build
+build:
+  # You can use the following env vars to refer to this image in your deploy commands:
+  #  - OKTETO_BUILD_GOTREASA_BERLIN_CLOCK_REGISTRY: image registry
+  #  - OKTETO_BUILD_GOTREASA_BERLIN_CLOCK_REPOSITORY: image repo
+  #  - OKTETO_BUILD_GOTREASA_BERLIN_CLOCK_IMAGE: image name
+  #  - OKTETO_BUILD_GOTREASA_BERLIN_CLOCK_SHA: image tag sha256
+  {{ cookiecutter.project_slug }}:
+    context: .
+    dockerfile: Dockerfile
+
+# The deploy section defines how to deploy your development environment
+# More info: https://www.okteto.com/docs/reference/manifest/#deploy
+deploy:
+  compose: compose.yml
+
+# The dependencies section defines other git repositories to be deployed as part of your development environment
+# More info: https://www.okteto.com/docs/reference/manifest/#dependencies
+# dependencies:
+#   - https://github.com/okteto/sample
+
+# The dev section defines how to activate a development container
+# More info: https://www.okteto.com/docs/reference/manifest/#dev
+dev:
+  {{ cookiecutter.project_slug }}-app:
+    command: npm ci --omit=dev --ignore-scripts && npm run start:app
+    workdir: /usr/src/app
+    forward:
+      - 9229:9229
+      - 9080:9080
+  {{cookiecutter.project_slug}}-goss:
+    image: aelsabbahy/goss
+    environment:
+      - NODE_ENV=production

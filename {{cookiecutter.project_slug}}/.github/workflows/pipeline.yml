@@ -1,0 +1,334 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.ibm.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Pipeline
+
+env:
+  PACT_BROKER_TOKEN: "{{ '${{secrets.PACT_BROKER_TOKEN }}' }}"
+  APP_HOST: "{{ '${{ vars.APP_HOST }}' }}"
+  OKTETO_TOKEN: "{{ '${{ secrets.OKTETO_TOKEN }}' }}"
+  OKTETO_REGISTRY: registry.cloud.okteto.net
+  OKTETO_IMAGE_TAG: registry.cloud.okteto.net/{{cookiecutter.okteto_namespace}}/{{ cookiecutter.project_slug }}:latest
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  commitlint:
+    name: Verify commits are linted
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+        with:
+          fetch-depth: 0
+      - uses: wagoid/commitlint-github-action@master
+
+  hadolint:
+    name: Verify dockerfile is linted
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: hadolint/hadolint-action@master
+        with:
+          dockerfile: Dockerfile
+
+  eslint-verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@master
+      - name: Use Node.js 18.16.0
+        uses: actions/checkout@master
+      - run: npm ci
+      - run: npm run lint:verify
+
+  inspec:
+    name: Unit test docker image
+    needs: [hadolint]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@master
+
+      - name: Install Inspec
+        run: curl https://omnitruck.chef.io/install.sh | sudo bash -s -- -P inspec
+
+      - name: Run Inspec tests
+        run: inspec exec test/container/unit/*.rb --chef-license accept
+
+  prettier-verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@master
+      - name: Use Node.js 18.16.0
+        uses: actions/checkout@master
+      - run: npm ci
+      - run: npm run prettier:verify
+
+  detect-secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@master
+      - name: Use Node.js 18.16.0
+        uses: actions/checkout@master
+      - run: npm ci
+      - run: npm run detect-secrets $(git ls-files)
+
+  snyk_test:
+    runs-on: ubuntu-latest
+    needs: [eslint-verify, prettier-verify]
+
+    steps:
+      - uses: actions/checkout@master
+      - name: Run Snyk test
+        uses: snyk/actions/node@master
+        env:
+          # In order to use the Snyk Action you will need to have a Snyk API token.
+          # More details in https://github.com/snyk/actions#getting-your-snyk-token
+          # or you can signup for free at https://snyk.io/login
+          SNYK_TOKEN: "{{ '${{ secrets.SNYK_TOKEN}}' }}"
+        with:
+          command: test --all-projects
+
+  test_and_coverage:
+    runs-on: ubuntu-latest
+    needs: [eslint-verify, prettier-verify, hadolint]
+
+    steps:
+      - uses: actions/checkout@master
+      - uses: warchant/setup-sonar-scanner@master
+      - name: Install Inspec
+        run: curl https://omnitruck.chef.io/install.sh | sudo bash -s -- -P inspec
+      - name: Use Node.js 18.16.0
+        uses: actions/setup-node@master
+        with:
+          node-version: 18.16.0
+      - run: touch .env
+      - run: npm ci
+      - run: npm test
+      - run: sonar-scanner
+          -Dsonar.login="{{ '${{ secrets.SONAR_TOKEN }}' }}"
+
+  pact_test:
+    runs-on: ubuntu-latest
+    needs: [eslint-verify, prettier-verify]
+
+    steps:
+      - uses: actions/setup-node@master
+      - name: Run Pact tests
+        uses: actions/checkout@master
+      - run: touch .env
+      - run: npm ci
+      - run: npm run test:api:consumer
+      - run: npm run publish:pact
+      - run: export CI=true && npm run test:api:provider
+
+  build_image:
+    runs-on: ubuntu-latest
+    needs:
+      [
+        pact_test,
+        test_and_coverage,
+        detect-secrets,
+        commitlint,
+        snyk_test,
+        inspec,
+      ]
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@master
+
+      - name: Log in to Okteto Container Registry
+        uses: docker/login-action@master
+        with:
+          registry: "{{ '${{ env.OKTETO_REGISTRY }}' }}"
+          username: "{{ '${{ vars.OKTETO_USERNAME }}' }}"
+          password: "{{ '${{ secrets.OKTETO_TOKEN }}' }}" # pragma: allowlist secret
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@master
+        with:
+          images: "{{ '${{ env.REGISTRY }}' }}/{{cookiecutter.okteto_namespace}}/{{cookiecutter.project_slug}}"
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@master
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: "{{ '${{ env.OKTETO_IMAGE_TAG }}' }}"
+          labels: "{{ '${{ steps.meta.outputs.labels }}' }}"
+
+  check_container_structure:
+    runs-on: ubuntu-latest
+    needs: [build_image]
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@master
+
+      - name: Log in to Okteto Container Registry
+        uses: docker/login-action@master
+        with:
+          registry: "{{ '${{ env.OKTETO_REGISTRY }}' }}"
+          username: "{{ '${{ vars.OKTETO_USERNAME }}' }}"
+          password: "{{ '${{ secrets.OKTETO_TOKEN }}' }}" # pragma: allowlist secret
+
+      - name: Pull the container image for testing
+        run: docker pull "{{ '${{ env.OKTETO_IMAGE_TAG }}' }}"
+
+      - name: Run tests on the container structure
+        uses: plexsystems/container-structure-test-action@main
+        with:
+          image: "{{ '${{ env.OKTETO_IMAGE_TAG }}' }}"
+          config: test/container/structure/config.yaml
+
+  check_container_runs_correctly:
+    runs-on: ubuntu-latest
+    needs: [build_image]
+    steps:
+      - name: Log in to Okteto Container Registry
+        uses: docker/login-action@master
+        with:
+          registry: "{{ '${{ env.OKTETO_REGISTRY }}' }}"
+          username: "{{ '${{ vars.OKTETO_USERNAME }}' }}"
+          password: "{{ '${{ secrets.OKTETO_TOKEN }}' }}" # pragma: allowlist secret
+
+      - name: Pull the container image for testing
+        run: docker pull "{{ '${{ env.OKTETO_IMAGE_TAG }}' }}"
+
+      - name: Run the goss tests on the image
+        run: |
+          docker run --name goss aelsabbahy/goss goss
+          docker run --rm -d --volumes-from goss --name app "{{ '${{ env.OKTETO_IMAGE_TAG }}' }}"
+          sleep 20
+          docker exec app /goss/goss validate --format tap
+
+  check_container_efficiency:
+    runs-on: ubuntu-latest
+    needs: [build_image]
+    steps:
+      - name: Log in to Okteto Container Registry
+        uses: docker/login-action@master
+        with:
+          registry: "{{ '${{ env.OKTETO_REGISTRY }}' }}"
+          username: "{{ '${{ vars.OKTETO_USERNAME }}' }}"
+          password: "{{ '${{ secrets.OKTETO_TOKEN }}' }}" # pragma: allowlist secret
+
+      - name: Pull the container image for testing
+        run: docker pull "{{ '${{ env.OKTETO_IMAGE_TAG }}' }}"
+
+      - name: Analyse the container for waste using dive
+        run: |
+          docker run --rm \
+            -v /var/run/docker.sock:/var/run/docker.sock \
+            wagoodman/dive:latest --ci "{{ '${{ env.OKTETO_IMAGE_TAG }}' }}" \
+            --lowestEfficiency=0.90 --highestUserWastedPercent=0.20 \
+            --highestWastedBytes=40MB
+
+  check_container_security:
+    runs-on: ubuntu-latest
+    needs: [build_image]
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@master
+
+      - name: Log in to Okteto Container Registry
+        uses: docker/login-action@master
+        with:
+          registry: "{{ '${{ env.OKTETO_REGISTRY }}' }}"
+          username: "{{ '${{ vars.OKTETO_USERNAME }}' }}"
+          password: "{{ '${{ secrets.OKTETO_TOKEN }}' }}" # pragma: allowlist secret
+
+      - name: Pull the container image for testing
+        run: docker pull "{{ '${{ env.OKTETO_IMAGE_TAG }}' }}"
+
+      - name: Run Security test on container image
+        env:
+          # In order to use the Snyk Action you will need to have a Snyk API token.
+          # More details in https://github.com/snyk/actions#getting-your-snyk-token
+          # or you can signup for free at https://snyk.io/login
+          SNYK_TOKEN: "{{ '${{ secrets.SNYK_TOKEN}}' }}"
+        run: |
+          npm ci
+          npx snyk container test "{{ '${{ env.OKTETO_IMAGE_TAG }}' }}"
+
+  check_container_software_list:
+    runs-on: ubuntu-latest
+    needs: [build_image]
+    steps:
+      - name: Log in to Okteto Container Registry
+        uses: docker/login-action@master
+        with:
+          registry: "{{ '${{ env.OKTETO_REGISTRY }}' }}"
+          username: "{{ '${{ vars.OKTETO_USERNAME }}' }}"
+          password: "{{ '${{ secrets.OKTETO_TOKEN }}' }}" # pragma: allowlist secret
+
+      - name: Pull the container image for testing
+        run: docker pull "{{ '${{ env.OKTETO_IMAGE_TAG }}' }}"
+
+      - name: Generate software bill of materials
+        uses: anchore/sbom-action@v0
+        with:
+          image: "{{ '${{ env.OKTETO_IMAGE_TAG }}' }}"
+
+  deploy_image:
+    runs-on: ubuntu-latest
+    needs:
+      [
+        check_container_structure,
+        check_container_runs_correctly,
+        check_container_efficiency,
+        check_container_security,
+        check_container_software_list,
+      ]
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Log in to Okteto Container Registry
+        uses: docker/login-action@master
+        with:
+          registry: "{{ '${{ env.OKTETO_REGISTRY }}' }}"
+          username: "{{ '${{ vars.OKTETO_USERNAME }}' }}"
+          password: "{{ '${{ secrets.OKTETO_TOKEN }}' }}" # pragma: allowlist secret
+
+      - name: Pull latest image
+        run: docker pull "{{ '${{ env.OKTETO_IMAGE_TAG }}' }}"
+
+      - name: Install okteto CLI
+        run: curl https://get.okteto.com -sSfL | sh
+
+      - name: Setup the Okteto context
+        run: okteto context use --token "{{ '${{ secrets.OKTETO_TOKEN }}' }}"
+
+      - name: Deploy the containers using Okteto
+        run: okteto deploy --wait
+
+  smoke_test:
+    runs-on: ubuntu-latest
+    needs: [deploy_image]
+    steps:
+      - uses: actions/setup-node@master
+      - name: Smoke test using pact tests
+        uses: actions/checkout@master
+      - run: touch .env
+      - run: npm ci
+      - run: npm run test:api:consumer && export SMOKE_TEST=true && npm run test:api:provider -- --collectCoverage=false
+
+  snyk_monitor:
+    runs-on: ubuntu-latest
+    needs: [deploy_image]
+
+    steps:
+      - uses: actions/checkout@master
+      - name: Use Node.js 18.16.0
+        uses: snyk/actions/node@master
+        env:
+          # In order to use the Snyk Action you will need to have a Snyk API token.
+          # More details in https://github.com/snyk/actions#getting-your-snyk-token
+          # or you can signup for free at https://snyk.io/login
+          SNYK_TOKEN: "{{ '${{ secrets.SNYK_TOKEN}}' }}"
+        with:
+          command: monitor --all-projects

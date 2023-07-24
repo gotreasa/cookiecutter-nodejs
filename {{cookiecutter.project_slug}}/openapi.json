@@ -10,7 +10,7 @@
       "url": "http://localhost:9080"
     },
     {
-      "url": "https://{{cookiecutter.project_slug}}-app.lczugnccqc5.eu-de.codeengine.appdomain.cloud"
+      "url": "https://{{cookiecutter.project_slug}}-app-{{cookiecutter.okteto_namespace}}.cloud.okteto.net"
     }
   ],
   "paths": {

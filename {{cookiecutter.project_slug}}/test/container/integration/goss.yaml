@@ -1,0 +1,55 @@
+dns:
+  localhost:
+    addrs:
+      - ::1
+    resolvable: true
+
+port:
+  tcp6:9080:
+    listening: true
+    ip:
+      - '::'
+    skip: false
+
+process:
+  node:
+    skip: false
+    running: true
+
+group:
+  node:
+    exists: true
+    gid: 1000
+    skip: false
+
+user:
+  node:
+    exists: true
+    gid: 1000
+    uid: 1000
+    home: /home/node
+    shell: /bin/sh
+    skip: false
+
+interface:
+  eth0:
+    exists: true
+
+kernel-param:
+  kernel.ostype:
+    value: Linux
+
+file:
+  /usr/src/app/app.js:
+    exists: true
+    mode: '0775'
+    size: 267
+    owner: node
+    group: root
+    filetype: file
+    contains: ['server.address().port']
+
+http:
+  health_endpoint:
+    url: http://localhost:9080/health
+    status: 200

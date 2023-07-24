@@ -28,12 +28,25 @@ const providerOptions = {
 if (process.env.CI || process.env.PACT_PUBLISH_RESULTS) {
   Object.assign(providerOptions, {
     pactBrokerUrl: 'https://{{cookiecutter.pact_flow_username}}.pactflow.io/',
+    /**
+     * @TODO: update the code based on the error:
+     * pactBrokerUrl requires one of the following properties: pactUrls,consumerVersionSelectors,consumerVersionTags
+     */
+    pactUrls: [
+      path.resolve(
+        __dirname,
+        '../../pact/pacts/dummy_client-dummy_app.json',
+      ),
+    ],
     publishVerificationResult: true,
   });
 } else {
   Object.assign(providerOptions, {
     pactUrls: [
-      path.resolve(__dirname, '../../pact/pacts/dummy_client-dummy_app.json'),
+      path.resolve(
+        __dirname,
+        '../../pact/pacts/dummy_client-dummy_app.json',
+      ),
     ],
   });
 }
@@ -46,6 +59,6 @@ describe('Test Dummy Provider', () => {
   test('tests dummmy api routes', async () => {
     const output = await new Verifier(providerOptions).verifyProvider();
     console.log(output);
-    expect(output).toContain('0 failures');
+    expect(output).toContain('finished: 0');
   });
 });

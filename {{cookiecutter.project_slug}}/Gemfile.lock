@@ -1,0 +1,43 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    docile (1.4.0)
+    haml (6.1.1)
+      temple (>= 0.8.2)
+      thor
+      tilt
+    prettier_print (1.2.1)
+    rbs (3.1.0)
+    simplecov (0.22.0)
+      docile (~> 1.1)
+      simplecov-html (~> 0.11)
+      simplecov_json_formatter (~> 0.1)
+    simplecov-html (0.12.3)
+    simplecov_json_formatter (0.1.4)
+    syntax_tree (6.1.1)
+      prettier_print (>= 1.2.0)
+    syntax_tree-haml (4.0.3)
+      haml (>= 5.2)
+      prettier_print (>= 1.2.1)
+      syntax_tree (>= 6.0.0)
+    syntax_tree-rbs (1.0.0)
+      prettier_print
+      rbs
+      syntax_tree (>= 2.0.1)
+    temple (0.10.2)
+    thor (1.2.2)
+    tilt (2.2.0)
+
+PLATFORMS
+  arm64-darwin-22
+
+DEPENDENCIES
+  bundler
+  prettier_print
+  simplecov
+  syntax_tree
+  syntax_tree-haml
+  syntax_tree-rbs
+
+BUNDLED WITH
+   2.4.14
