@@ -60,7 +60,7 @@ installPackage "git"
 installPackage "gh"
 installPackage "curl"
 installPackage "ruby"
-installPacakge "chef/chef/inspec"
+installPackage "chef/chef/inspec"
 installPackage "docker" "--cask"
 verifyDockerIsRunning
 installNvm
