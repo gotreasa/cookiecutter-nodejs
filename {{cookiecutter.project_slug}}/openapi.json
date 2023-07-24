@@ -31,6 +31,17 @@
           }
         }
       }
+    },
+    "/health": {
+      "get": {
+        "summary": "Health check endpoint.",
+        "description": "Reports that the service is online.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   }
 }

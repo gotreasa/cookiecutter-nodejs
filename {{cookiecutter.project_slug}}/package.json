@@ -26,7 +26,7 @@
     "precommit": "lint-staged --relative --verbose",
     "prepare": "husky install",
     "prettier:fix": "prettier --write",
-    "prettier:verify": "prettier --check \"*.{js,css,md,yml,json}\"",
+    "prettier:verify": "prettier --check \"*.{css,feature,js,json,rb,md,sh,yaml,yml}\"",
     "publish:pact": "env-cmd node test/scripts/publish.pacts.js",
     "save": "./scripts/save.sh",
     "start": "npm run start:app",
@@ -44,7 +44,7 @@
     "test:api:watch": "npm run build:postman && chokidar '*.js' 'src/**/*.js' 'test/mock/postman_collection.json' --initial -c 'npm run test:api'",
     "test:bdd": "jest ./features",
     "test:bdd:watch": "npm run test:bdd -- --watch",
-    "test:security": "env-cmd snyk test",
+    "test:security": "env-cmd snyk test --all-projects",
     "test:security:dev": "npm run test:security -- --dev",
     "test:unit": "jest ./test --testPathIgnorePatterns test/**/*.pact.spec.js",
     "test:unit:container": "inspec exec test/container/unit/*.rb --chef-license accept",
@@ -58,7 +58,7 @@
     "*.js": [
       "npm run lint:fix"
     ],
-    "*.{css,js,json,rb,md,yml,feature}": [
+    "*.{css,feature,js,json,rb,md,sh,yaml,yml}": [
       "npm run prettier:fix"
     ],
     "Dockerfile": [
