@@ -1,3 +1,5 @@
+#!/bin/bash
+
 function start() {
     echo "🏁    Starting the pre-checks 🧾 for {{cookiecutter.project_name}}"
 }
