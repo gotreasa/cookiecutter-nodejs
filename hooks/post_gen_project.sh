@@ -4,57 +4,6 @@ function start() {
     echo "🏁    Starting the configuration of {{cookiecutter.project_name}}"
 }
 
-function installPackage() {
-    TYPE=$2
-    PACKAGE=$1
-    set +e
-    if ! [ -x "$(command -v $PACKAGE)" ]; then
-        if [[ $(uname) == "Darwin" ]]; then
-            echo -e "\n\nℹ️    Installing $PACKAGE"
-            if ! brew install $TYPE $PACKAGE; then
-                echo -e "\n⛔️    There was an problem installing $PACKAGE"
-                exit 1
-            else
-                echo -e "\n✅    $PACKAGE installed successfully\n"
-            fi
-        else
-            echo -e "\n⛔️    $PACKAGE needs to be installed"
-            exit 1
-        fi
-    else
-        echo -e "\n✅    All good with $PACKAGE\n"
-    fi
-    set -e
-}
-
-verifyDockerIsRunning() {
-    echo -e "\n\nℹ️    Checking Docker is running"
-    if ! docker info &>/dev/null; then
-        echo -e "\n✅    Docker was not running, Starting...\n"
-        open --background -a Docker
-    else
-        echo -e "\n✅    Docker is running\n"
-    fi 
-}
-
-loadNvm() {
-    source $(brew --prefix nvm)/nvm.sh
-}
-
-function installNvm() {
-    set +e
-    # Setup the NVM path
-    loadNvm
-    # Check if NVM is installed
-    if [ -z "$(command -v nvm)" ]; then 
-        echo -e "\n⛔️    NVM needs to be installed"
-        exit 1
-    else
-        echo -e "\n✅    All good with NVM\n"
-    fi
-    set -e
-}
-
 function setupRepository() {
     echo -e "\n\nℹ️    Setting up the remote repository"
     gh repo create {{cookiecutter.github_url}}/{{cookiecutter.github_org}}/{{cookiecutter.project_slug}} --public
@@ -73,7 +22,7 @@ EOF
 }
 
 function installLatestNodeAndNpmPackages() {
-    loadNvm
+    source $(brew --prefix nvm)/nvm.sh
     nvm use
     # Setup NVM and Node version
     # echo -e "\n\nℹ️    Installing NodeJS"
@@ -170,13 +119,7 @@ function enableSonarQualityGate() {
 }
 
 start
-installPackage "git"
-installPackage "gh"
-installPackage "curl"
-installPackage "docker" "--cask"
-verifyDockerIsRunning
 setupRepository
-installNvm
 installLatestNodeAndNpmPackages
 installRubyPackages
 setupSonar
