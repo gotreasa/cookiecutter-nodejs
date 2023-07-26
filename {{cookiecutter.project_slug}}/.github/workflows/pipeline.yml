@@ -17,6 +17,17 @@ on:
     branches: [main]
 
 jobs:
+  test_swagger_editor_validator_remote:
+    runs-on: ubuntu-latest
+    name: Swagger Editor Validator Remote
+
+    steps:
+      - uses: actions/checkout@master
+      - name: Validate OpenAPI definition
+        uses: char0n/swagger-editor-validate@master
+        with:
+          definition-file: openapi.json
+
   commitlint:
     name: Verify commits are linted
     runs-on: ubuntu-latest
@@ -129,12 +140,13 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       [
-        pact_test,
-        test_and_coverage,
-        detect-secrets,
         commitlint,
-        snyk_test,
+        detect-secrets,
         inspec,
+        pact_test,
+        snyk_test,
+        test_and_coverage,
+        test_swagger_editor_validator_remote,
       ]
     steps:
       - name: Check out the repo
@@ -278,11 +290,11 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       [
-        check_container_structure,
-        check_container_runs_correctly,
         check_container_efficiency,
+        check_container_runs_correctly,
         check_container_security,
         check_container_software_list,
+        check_container_structure,
       ]
     steps:
       - uses: actions/checkout@master
