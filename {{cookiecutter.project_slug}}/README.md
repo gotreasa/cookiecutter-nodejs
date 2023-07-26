@@ -6,6 +6,7 @@
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project={{cookiecutter.sonar_org}}_{{cookiecutter.project_slug}}&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id={{cookiecutter.sonar_org}}_{{cookiecutter.project_slug}})
 [![Known Vulnerabilities](https://snyk.io/test/github/{{cookiecutter.github_org}}/{{cookiecutter.project_slug}}/badge.svg)](https://snyk.io/test/github/{{cookiecutter.github_org}}/{{cookiecutter.project_slug}})
 [![Build Status](https://github.com/{{cookiecutter.github_org}}/{{cookiecutter.project_slug}}/actions/workflows/pipeline.yml/badge.svg)](https://github.com/{{cookiecutter.github_org}}/{{cookiecutter.project_slug}}/actions/workflows/pipeline.yml)
+[![OpenAPI Validation](https://validator.swagger.io/validator?url=https://raw.githubusercontent.com/{{cookiecutter.github_org}}/{{cookiecutter.project_slug}}/main/openapi.json)](https://editor.swagger.io/?url=https://raw.githubusercontent.com/{{cookiecutter.github_org}}/{{cookiecutter.project_slug}}/main/openapi.json)
 
 API: [https://{{cookiecutter.project_slug}}-app-{{cookiecutter.okteto_namespace}}.cloud.okteto.net/api-docs/]
 
