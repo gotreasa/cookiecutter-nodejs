@@ -1,11 +1,15 @@
 # NodeJS Cookiecutter
 
-This is a cookiecutter project that allows you to spin up a new NodeJS repository.  This will give you a working repository pushed to Github including the working Github actions, Sonar, Snyk, etc.
+This is a cookiecutter project that allows you to spin up a new NodeJS repository.  This will give you a working repository pushed to Github including the working Github actions, Sonar, Snyk, etc.  
 
 To use the project run either:
+```sh
 cookiecutter cookiecutter-nodejs
+```
 or
+```sh
 cookiecutter https://github.com/gotreasa/cookiecutter-nodejs/
+```
 
 You will be prompted for the different values needed, however, there are some secrets that are not prompted.  To be able get those values you will need to set up:
 `~/.cookiecutterrc`
